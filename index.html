@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portal Pembelajaran Madrasah - MI, MTs, MA</title>
+    <title>Portal Pembelajaran Madrasah - Kelas 1-12</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         .subject-card {
@@ -59,6 +59,24 @@
             transform: translateY(-1px);
             box-shadow: 0 8px 25px -8px rgba(34, 197, 94, 0.4);
         }
+        .class-selector {
+            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+            border: 2px solid #bbf7d0;
+        }
+        .class-selector.active {
+            background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+            color: white;
+            border-color: #16a34a;
+        }
+        .subject-selector {
+            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+            border: 2px solid #bbf7d0;
+        }
+        .subject-selector.active {
+            background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+            color: white;
+            border-color: #16a34a;
+        }
     </style>
 </head>
 <body class="bg-gradient-to-br from-green-50 via-white to-emerald-50 min-h-screen">
@@ -68,7 +86,7 @@
             <h1 class="text-5xl font-bold text-white text-center mb-2">
                 🕌 Portal Pembelajaran Madrasah
             </h1>
-            <p class="text-green-100 text-center text-lg">Sistem Pembelajaran Terpadu MI, MTs, dan MA</p>
+            <p class="text-green-100 text-center text-lg">Sistem Pembelajaran Terpadu Kelas 1-12 • Semua Mata Pelajaran</p>
         </div>
     </header>
 
@@ -78,7 +96,7 @@
             <!-- Search Bar -->
             <div class="mb-6">
                 <div class="relative max-w-2xl mx-auto">
-                    <input type="text" id="searchInput" placeholder="🔍 Cari mata pelajaran, bab, atau jenjang..." 
+                    <input type="text" id="searchInput" placeholder="🔍 Cari mata pelajaran, kelas, atau jenjang..." 
                            class="w-full px-6 py-4 text-lg rounded-2xl border-0 shadow-lg focus:ring-4 focus:ring-white/30 focus:outline-none"
                            oninput="performSearch()">
                     <button onclick="clearSearch()" class="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600">
@@ -88,7 +106,7 @@
             </div>
 
             <!-- Filter Buttons -->
-            <div class="flex flex-wrap justify-center gap-3">
+            <div class="flex flex-wrap justify-center gap-3 mb-4">
                 <button onclick="filterByJenjang('all')" class="filter-btn active px-6 py-3 bg-white/20 text-white rounded-xl font-medium hover:bg-white/30">
                     Semua Jenjang
                 </button>
@@ -100,6 +118,68 @@
                 </button>
                 <button onclick="filterByJenjang('MA')" class="filter-btn px-6 py-3 bg-white/20 text-white rounded-xl font-medium hover:bg-white/30">
                     MA (Kelas 10-12)
+                </button>
+            </div>
+
+            <!-- Subject Filter -->
+            <div class="flex flex-wrap justify-center gap-2 mb-4">
+                <button onclick="filterBySubject('all')" class="subject-selector active px-3 py-2 rounded-lg font-medium text-sm transition-all">
+                    Semua Mapel
+                </button>
+                <button onclick="filterBySubject('pai')" class="subject-selector px-3 py-2 rounded-lg font-medium text-sm transition-all">
+                    PAI
+                </button>
+                <button onclick="filterBySubject('umum')" class="subject-selector px-3 py-2 rounded-lg font-medium text-sm transition-all">
+                    Umum
+                </button>
+                <button onclick="filterBySubject('bahasa')" class="subject-selector px-3 py-2 rounded-lg font-medium text-sm transition-all">
+                    Bahasa
+                </button>
+                <button onclick="filterBySubject('sains')" class="subject-selector px-3 py-2 rounded-lg font-medium text-sm transition-all">
+                    Sains & Teknologi
+                </button>
+            </div>
+
+            <!-- Class Filter -->
+            <div class="flex flex-wrap justify-center gap-2">
+                <button onclick="filterByClass('all')" class="class-selector active px-4 py-2 rounded-lg font-medium text-sm transition-all">
+                    Semua Kelas
+                </button>
+                <button onclick="filterByClass('1')" class="class-selector px-4 py-2 rounded-lg font-medium text-sm transition-all">
+                    Kelas 1
+                </button>
+                <button onclick="filterByClass('2')" class="class-selector px-4 py-2 rounded-lg font-medium text-sm transition-all">
+                    Kelas 2
+                </button>
+                <button onclick="filterByClass('3')" class="class-selector px-4 py-2 rounded-lg font-medium text-sm transition-all">
+                    Kelas 3
+                </button>
+                <button onclick="filterByClass('4')" class="class-selector px-4 py-2 rounded-lg font-medium text-sm transition-all">
+                    Kelas 4
+                </button>
+                <button onclick="filterByClass('5')" class="class-selector px-4 py-2 rounded-lg font-medium text-sm transition-all">
+                    Kelas 5
+                </button>
+                <button onclick="filterByClass('6')" class="class-selector px-4 py-2 rounded-lg font-medium text-sm transition-all">
+                    Kelas 6
+                </button>
+                <button onclick="filterByClass('7')" class="class-selector px-4 py-2 rounded-lg font-medium text-sm transition-all">
+                    Kelas 7
+                </button>
+                <button onclick="filterByClass('8')" class="class-selector px-4 py-2 rounded-lg font-medium text-sm transition-all">
+                    Kelas 8
+                </button>
+                <button onclick="filterByClass('9')" class="class-selector px-4 py-2 rounded-lg font-medium text-sm transition-all">
+                    Kelas 9
+                </button>
+                <button onclick="filterByClass('10')" class="class-selector px-4 py-2 rounded-lg font-medium text-sm transition-all">
+                    Kelas 10
+                </button>
+                <button onclick="filterByClass('11')" class="class-selector px-4 py-2 rounded-lg font-medium text-sm transition-all">
+                    Kelas 11
+                </button>
+                <button onclick="filterByClass('12')" class="class-selector px-4 py-2 rounded-lg font-medium text-sm transition-all">
+                    Kelas 12
                 </button>
             </div>
         </div>
@@ -138,8 +218,10 @@
         <!-- Subjects Grid -->
         <div id="subjects-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             
-            <!-- MI - Al-Quran Hadis -->
-            <div class="subject-card rounded-2xl shadow-xl p-6 jenjang-MI kategori-pai" data-jenjang="MI" data-kategori="pai">
+            <!-- ========== KELAS 1 MI ========== -->
+            
+            <!-- Al-Quran Hadis MI Kelas 1 -->
+            <div class="subject-card rounded-2xl shadow-xl p-6 jenjang-MI kategori-pai" data-jenjang="MI" data-kategori="pai" data-classes="1">
                 <div class="flex items-center justify-between mb-4">
                     <div class="flex items-center">
                         <div class="w-14 h-14 bg-gradient-to-br from-green-500 to-emerald-600 rounded-xl flex items-center justify-center text-white text-2xl mr-4">
@@ -147,38 +229,38 @@
                         </div>
                         <div>
                             <h3 class="text-xl font-bold text-gray-800">Al-Quran Hadis</h3>
-                            <div class="grade-badge text-white px-3 py-1 rounded-full text-sm font-medium mt-1">MI</div>
+                            <div class="grade-badge text-white px-3 py-1 rounded-full text-sm font-medium mt-1">MI Kelas 1</div>
                         </div>
                     </div>
                 </div>
-                <p class="text-gray-600 mb-4">Mempelajari Al-Quran dan Hadis sebagai pedoman hidup</p>
+                <p class="text-gray-600 mb-4">Pengenalan dasar Al-Quran dan Hadis</p>
                 <div class="space-y-3">
                     <div class="chapter-item p-3 rounded-lg border border-gray-200">
                         <div class="flex justify-between items-center">
-                            <span class="cursor-pointer flex-1" onclick="openChapter('Al-Quran Hadis', 'Mengenal Huruf Hijaiyah')">
+                            <span class="flex-1">
                                 <span class="font-medium">Bab 1:</span> Mengenal Huruf Hijaiyah
                             </span>
-                            <a href="mi/al-quran-hadis/mengenal-huruf-hijaiyah.html" class="ml-3 learn-btn text-white px-4 py-2 rounded-lg text-sm font-medium">
+                            <a href="mi/al-quran-hadis/1/mengenal-huruf-hijaiyah.html" class="ml-3 learn-btn text-white px-4 py-2 rounded-lg text-sm font-medium">
                                 📚 Pelajari
                             </a>
                         </div>
                     </div>
                     <div class="chapter-item p-3 rounded-lg border border-gray-200">
                         <div class="flex justify-between items-center">
-                            <span class="cursor-pointer flex-1" onclick="openChapter('Al-Quran Hadis', 'Surat-surat Pendek')">
-                                <span class="font-medium">Bab 2:</span> Surat-surat Pendek
+                            <span class="flex-1">
+                                <span class="font-medium">Bab 2:</span> Huruf Hijaiyah Berharakat
                             </span>
-                            <a href="mi/al-quran-hadis/surat-surat-pendek.html" class="ml-3 learn-btn text-white px-4 py-2 rounded-lg text-sm font-medium">
+                            <a href="mi/al-quran-hadis/1/huruf-hijaiyah-berharakat.html" class="ml-3 learn-btn text-white px-4 py-2 rounded-lg text-sm font-medium">
                                 📚 Pelajari
                             </a>
                         </div>
                     </div>
                     <div class="chapter-item p-3 rounded-lg border border-gray-200">
                         <div class="flex justify-between items-center">
-                            <span class="cursor-pointer flex-1">
-                                <span class="font-medium">Bab 3:</span> Hadis tentang Kebersihan
+                            <span class="flex-1">
+                                <span class="font-medium">Bab 3:</span> Membaca Kata Sederhana
                             </span>
-                            <a href="mi/al-quran-hadis/hadis-tentang-kebersihan.html" class="ml-3 learn-btn text-white px-4 py-2 rounded-lg text-sm font-medium">
+                            <a href="mi/al-quran-hadis/1/membaca-kata-sederhana.html" class="ml-3 learn-btn text-white px-4 py-2 rounded-lg text-sm font-medium">
                                 📚 Pelajari
                             </a>
                         </div>
@@ -186,47 +268,47 @@
                 </div>
             </div>
 
-            <!-- MI - Akidah Akhlak -->
-            <div class="subject-card rounded-2xl shadow-xl p-6 jenjang-MI kategori-pai" data-jenjang="MI" data-kategori="pai">
+            <!-- Akidah Akhlak MI Kelas 1 -->
+            <div class="subject-card rounded-2xl shadow-xl p-6 jenjang-MI kategori-pai" data-jenjang="MI" data-kategori="pai" data-classes="1">
                 <div class="flex items-center justify-between mb-4">
                     <div class="flex items-center">
                         <div class="w-14 h-14 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl flex items-center justify-center text-white text-2xl mr-4">
-                            ✨
+                            🤲
                         </div>
                         <div>
                             <h3 class="text-xl font-bold text-gray-800">Akidah Akhlak</h3>
-                            <div class="grade-badge text-white px-3 py-1 rounded-full text-sm font-medium mt-1">MI</div>
+                            <div class="grade-badge text-white px-3 py-1 rounded-full text-sm font-medium mt-1">MI Kelas 1</div>
                         </div>
                     </div>
                 </div>
-                <p class="text-gray-600 mb-4">Membangun keimanan dan akhlak mulia</p>
+                <p class="text-gray-600 mb-4">Dasar-dasar keimanan dan akhlak</p>
                 <div class="space-y-3">
                     <div class="chapter-item p-3 rounded-lg border border-gray-200">
                         <div class="flex justify-between items-center">
-                            <span class="cursor-pointer flex-1" onclick="openChapter('Akidah Akhlak', 'Rukun Iman')">
-                                <span class="font-medium">Bab 1:</span> Rukun Iman
+                            <span class="flex-1">
+                                <span class="font-medium">Bab 1:</span> Mengenal Allah SWT
                             </span>
-                            <a href="mi/akidah-akhlak/rukun-iman.html" class="ml-3 learn-btn text-white px-4 py-2 rounded-lg text-sm font-medium">
+                            <a href="mi/akidah-akhlak/1/mengenal-allah-swt.html" class="ml-3 learn-btn text-white px-4 py-2 rounded-lg text-sm font-medium">
                                 📚 Pelajari
                             </a>
                         </div>
                     </div>
                     <div class="chapter-item p-3 rounded-lg border border-gray-200">
                         <div class="flex justify-between items-center">
-                            <span class="cursor-pointer flex-1">
+                            <span class="flex-1">
                                 <span class="font-medium">Bab 2:</span> Akhlak Terpuji
                             </span>
-                            <a href="mi/akidah-akhlak/akhlak-terpuji.html" class="ml-3 learn-btn text-white px-4 py-2 rounded-lg text-sm font-medium">
+                            <a href="mi/akidah-akhlak/1/akhlak-terpuji.html" class="ml-3 learn-btn text-white px-4 py-2 rounded-lg text-sm font-medium">
                                 📚 Pelajari
                             </a>
                         </div>
                     </div>
                     <div class="chapter-item p-3 rounded-lg border border-gray-200">
                         <div class="flex justify-between items-center">
-                            <span class="cursor-pointer flex-1">
-                                <span class="font-medium">Bab 3:</span> Asmaul Husna
+                            <span class="flex-1">
+                                <span class="font-medium">Bab 3:</span> Berperilaku Baik
                             </span>
-                            <a href="mi/akidah-akhlak/asmaul-husna.html" class="ml-3 learn-btn text-white px-4 py-2 rounded-lg text-sm font-medium">
+                            <a href="mi/akidah-akhlak/1/berperilaku-baik.html" class="ml-3 learn-btn text-white px-4 py-2 rounded-lg text-sm font-medium">
                                 📚 Pelajari
                             </a>
                         </div>
@@ -234,47 +316,47 @@
                 </div>
             </div>
 
-            <!-- MI - Fikih -->
-            <div class="subject-card rounded-2xl shadow-xl p-6 jenjang-MI kategori-pai" data-jenjang="MI" data-kategori="pai">
+            <!-- Fiqh MI Kelas 1 -->
+            <div class="subject-card rounded-2xl shadow-xl p-6 jenjang-MI kategori-pai" data-jenjang="MI" data-kategori="pai" data-classes="1">
                 <div class="flex items-center justify-between mb-4">
                     <div class="flex items-center">
                         <div class="w-14 h-14 bg-gradient-to-br from-purple-500 to-violet-600 rounded-xl flex items-center justify-center text-white text-2xl mr-4">
                             🕌
                         </div>
                         <div>
-                            <h3 class="text-xl font-bold text-gray-800">Fikih</h3>
-                            <div class="grade-badge text-white px-3 py-1 rounded-full text-sm font-medium mt-1">MI</div>
+                            <h3 class="text-xl font-bold text-gray-800">Fiqh</h3>
+                            <div class="grade-badge text-white px-3 py-1 rounded-full text-sm font-medium mt-1">MI Kelas 1</div>
                         </div>
                     </div>
                 </div>
-                <p class="text-gray-600 mb-4">Mempelajari tata cara ibadah dalam Islam</p>
+                <p class="text-gray-600 mb-4">Tata cara ibadah sederhana</p>
                 <div class="space-y-3">
                     <div class="chapter-item p-3 rounded-lg border border-gray-200">
                         <div class="flex justify-between items-center">
-                            <span class="cursor-pointer flex-1" onclick="openChapter('Fikih', 'Thaharah (Bersuci)')">
-                                <span class="font-medium">Bab 1:</span> Thaharah (Bersuci)
+                            <span class="flex-1">
+                                <span class="font-medium">Bab 1:</span> Bersuci (Thaharah)
                             </span>
-                            <a href="mi/fikih/thaharah-bersuci.html" class="ml-3 learn-btn text-white px-4 py-2 rounded-lg text-sm font-medium">
+                            <a href="mi/fiqh/1/bersuci-thaharah.html" class="ml-3 learn-btn text-white px-4 py-2 rounded-lg text-sm font-medium">
                                 📚 Pelajari
                             </a>
                         </div>
                     </div>
                     <div class="chapter-item p-3 rounded-lg border border-gray-200">
                         <div class="flex justify-between items-center">
-                            <span class="cursor-pointer flex-1">
-                                <span class="font-medium">Bab 2:</span> Shalat
+                            <span class="flex-1">
+                                <span class="font-medium">Bab 2:</span> Wudhu
                             </span>
-                            <a href="mi/fikih/shalat.html" class="ml-3 learn-btn text-white px-4 py-2 rounded-lg text-sm font-medium">
+                            <a href="mi/fiqh/1/wudhu.html" class="ml-3 learn-btn text-white px-4 py-2 rounded-lg text-sm font-medium">
                                 📚 Pelajari
                             </a>
                         </div>
                     </div>
                     <div class="chapter-item p-3 rounded-lg border border-gray-200">
                         <div class="flex justify-between items-center">
-                            <span class="cursor-pointer flex-1">
-                                <span class="font-medium">Bab 3:</span> Puasa
+                            <span class="flex-1">
+                                <span class="font-medium">Bab 3:</span> Doa Sehari-hari
                             </span>
-                            <a href="mi/fikih/puasa.html" class="ml-3 learn-btn text-white px-4 py-2 rounded-lg text-sm font-medium">
+                            <a href="mi/fiqh/1/doa-sehari-hari.html" class="ml-3 learn-btn text-white px-4 py-2 rounded-lg text-sm font-medium">
                                 📚 Pelajari
                             </a>
                         </div>
@@ -282,47 +364,143 @@
                 </div>
             </div>
 
-            <!-- MI - Matematika -->
-            <div class="subject-card rounded-2xl shadow-xl p-6 jenjang-MI kategori-umum" data-jenjang="MI" data-kategori="umum">
+            <!-- SKI MI Kelas 1 -->
+            <div class="subject-card rounded-2xl shadow-xl p-6 jenjang-MI kategori-pai" data-jenjang="MI" data-kategori="pai" data-classes="1">
                 <div class="flex items-center justify-between mb-4">
                     <div class="flex items-center">
-                        <div class="w-14 h-14 bg-gradient-to-br from-orange-500 to-red-600 rounded-xl flex items-center justify-center text-white text-2xl mr-4">
+                        <div class="w-14 h-14 bg-gradient-to-br from-amber-500 to-orange-600 rounded-xl flex items-center justify-center text-white text-2xl mr-4">
+                            📜
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-800">SKI</h3>
+                            <div class="grade-badge text-white px-3 py-1 rounded-full text-sm font-medium mt-1">MI Kelas 1</div>
+                        </div>
+                    </div>
+                </div>
+                <p class="text-gray-600 mb-4">Sejarah Kebudayaan Islam dasar</p>
+                <div class="space-y-3">
+                    <div class="chapter-item p-3 rounded-lg border border-gray-200">
+                        <div class="flex justify-between items-center">
+                            <span class="flex-1">
+                                <span class="font-medium">Bab 1:</span> Nabi Muhammad SAW
+                            </span>
+                            <a href="mi/ski/1/nabi-muhammad-saw.html" class="ml-3 learn-btn text-white px-4 py-2 rounded-lg text-sm font-medium">
+                                📚 Pelajari
+                            </a>
+                        </div>
+                    </div>
+                    <div class="chapter-item p-3 rounded-lg border border-gray-200">
+                        <div class="flex justify-between items-center">
+                            <span class="flex-1">
+                                <span class="font-medium">Bab 2:</span> Keluarga Nabi
+                            </span>
+                            <a href="mi/ski/1/keluarga-nabi.html" class="ml-3 learn-btn text-white px-4 py-2 rounded-lg text-sm font-medium">
+                                📚 Pelajari
+                            </a>
+                        </div>
+                    </div>
+                    <div class="chapter-item p-3 rounded-lg border border-gray-200">
+                        <div class="flex justify-between items-center">
+                            <span class="flex-1">
+                                <span class="font-medium">Bab 3:</span> Sahabat Nabi
+                            </span>
+                            <a href="mi/ski/1/sahabat-nabi.html" class="ml-3 learn-btn text-white px-4 py-2 rounded-lg text-sm font-medium">
+                                📚 Pelajari
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bahasa Arab MI Kelas 1 -->
+            <div class="subject-card rounded-2xl shadow-xl p-6 jenjang-MI kategori-bahasa" data-jenjang="MI" data-kategori="bahasa" data-classes="1">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="flex items-center">
+                        <div class="w-14 h-14 bg-gradient-to-br from-teal-500 to-cyan-600 rounded-xl flex items-center justify-center text-white text-2xl mr-4">
+                            🔤
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-800">Bahasa Arab</h3>
+                            <div class="grade-badge text-white px-3 py-1 rounded-full text-sm font-medium mt-1">MI Kelas 1</div>
+                        </div>
+                    </div>
+                </div>
+                <p class="text-gray-600 mb-4">Pengenalan bahasa Arab dasar</p>
+                <div class="space-y-3">
+                    <div class="chapter-item p-3 rounded-lg border border-gray-200">
+                        <div class="flex justify-between items-center">
+                            <span class="flex-1">
+                                <span class="font-medium">Bab 1:</span> Huruf Hijaiyah
+                            </span>
+                            <a href="mi/bahasa-arab/1/huruf-hijaiyah.html" class="ml-3 learn-btn text-white px-4 py-2 rounded-lg text-sm font-medium">
+                                📚 Pelajari
+                            </a>
+                        </div>
+                    </div>
+                    <div class="chapter-item p-3 rounded-lg border border-gray-200">
+                        <div class="flex justify-between items-center">
+                            <span class="flex-1">
+                                <span class="font-medium">Bab 2:</span> Kosakata Sederhana
+                            </span>
+                            <a href="mi/bahasa-arab/1/kosakata-sederhana.html" class="ml-3 learn-btn text-white px-4 py-2 rounded-lg text-sm font-medium">
+                                📚 Pelajari
+                            </a>
+                        </div>
+                    </div>
+                    <div class="chapter-item p-3 rounded-lg border border-gray-200">
+                        <div class="flex justify-between items-center">
+                            <span class="flex-1">
+                                <span class="font-medium">Bab 3:</span> Angka Arab
+                            </span>
+                            <a href="mi/bahasa-arab/1/angka-arab.html" class="ml-3 learn-btn text-white px-4 py-2 rounded-lg text-sm font-medium">
+                                📚 Pelajari
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Matematika MI Kelas 1 -->
+            <div class="subject-card rounded-2xl shadow-xl p-6 jenjang-MI kategori-sains" data-jenjang="MI" data-kategori="sains" data-classes="1">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="flex items-center">
+                        <div class="w-14 h-14 bg-gradient-to-br from-red-500 to-pink-600 rounded-xl flex items-center justify-center text-white text-2xl mr-4">
                             🔢
                         </div>
                         <div>
                             <h3 class="text-xl font-bold text-gray-800">Matematika</h3>
-                            <div class="grade-badge text-white px-3 py-1 rounded-full text-sm font-medium mt-1">MI</div>
+                            <div class="grade-badge text-white px-3 py-1 rounded-full text-sm font-medium mt-1">MI Kelas 1</div>
                         </div>
                     </div>
                 </div>
-                <p class="text-gray-600 mb-4">Dasar-dasar matematika untuk tingkat dasar</p>
+                <p class="text-gray-600 mb-4">Dasar-dasar matematika</p>
                 <div class="space-y-3">
                     <div class="chapter-item p-3 rounded-lg border border-gray-200">
                         <div class="flex justify-between items-center">
-                            <span class="cursor-pointer flex-1" onclick="openChapter('Matematika', 'Bilangan dan Operasi Hitung')">
-                                <span class="font-medium">Bab 1:</span> Bilangan dan Operasi Hitung
+                            <span class="flex-1">
+                                <span class="font-medium">Bab 1:</span> Bilangan 1-10
                             </span>
-                            <a href="mi/matematika/bilangan-dan-operasi-hitung.html" class="ml-3 learn-btn text-white px-4 py-2 rounded-lg text-sm font-medium">
+                            <a href="mi/matematika/1/bilangan-1-10.html" class="ml-3 learn-btn text-white px-4 py-2 rounded-lg text-sm font-medium">
                                 📚 Pelajari
                             </a>
                         </div>
                     </div>
                     <div class="chapter-item p-3 rounded-lg border border-gray-200">
                         <div class="flex justify-between items-center">
-                            <span class="cursor-pointer flex-1">
-                                <span class="font-medium">Bab 2:</span> Geometri Dasar
+                            <span class="flex-1">
+                                <span class="font-medium">Bab 2:</span> Penjumlahan Sederhana
                             </span>
-                            <a href="mi/matematika/geometri-dasar.html" class="ml-3 learn-btn text-white px-4 py-2 rounded-lg text-sm font-medium">
+                            <a href="mi/matematika/1/penjumlahan-sederhana.html" class="ml-3 learn-btn text-white px-4 py-2 rounded-lg text-sm font-medium">
                                 📚 Pelajari
                             </a>
                         </div>
                     </div>
                     <div class="chapter-item p-3 rounded-lg border border-gray-200">
                         <div class="flex justify-between items-center">
-                            <span class="cursor-pointer flex-1">
-                                <span class="font-medium">Bab 3:</span> Pengukuran
+                            <span class="flex-1">
+                                <span class="font-medium">Bab 3:</span> Bentuk Geometri
                             </span>
-                            <a href="mi/matematika/pengukuran.html" class="ml-3 learn-btn text-white px-4 py-2 rounded-lg text-sm font-medium">
+                            <a href="mi/matematika/1/bentuk-geometri.html" class="ml-3 learn-btn text-white px-4 py-2 rounded-lg text-sm font-medium">
                                 📚 Pelajari
                             </a>
                         </div>
@@ -330,8 +508,300 @@
                 </div>
             </div>
 
-            <!-- MTs - Al-Quran Hadis -->
-            <div class="subject-card rounded-2xl shadow-xl p-6 jenjang-MTs kategori-pai" data-jenjang="MTs" data-kategori="pai">
+            <!-- Bahasa Indonesia MI Kelas 1 -->
+            <div class="subject-card rounded-2xl shadow-xl p-6 jenjang-MI kategori-bahasa" data-jenjang="MI" data-kategori="bahasa" data-classes="1">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="flex items-center">
+                        <div class="w-14 h-14 bg-gradient-to-br from-rose-500 to-red-600 rounded-xl flex items-center justify-center text-white text-2xl mr-4">
+                            📝
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-800">Bahasa Indonesia</h3>
+                            <div class="grade-badge text-white px-3 py-1 rounded-full text-sm font-medium mt-1">MI Kelas 1</div>
+                        </div>
+                    </div>
+                </div>
+                <p class="text-gray-600 mb-4">Dasar membaca dan menulis</p>
+                <div class="space-y-3">
+                    <div class="chapter-item p-3 rounded-lg border border-gray-200">
+                        <div class="flex justify-between items-center">
+                            <span class="flex-1">
+                                <span class="font-medium">Bab 1:</span> Mengenal Huruf
+                            </span>
+                            <a href="mi/bahasa-indonesia/1/mengenal-huruf.html" class="ml-3 learn-btn text-white px-4 py-2 rounded-lg text-sm font-medium">
+                                📚 Pelajari
+                            </a>
+                        </div>
+                    </div>
+                    <div class="chapter-item p-3 rounded-lg border border-gray-200">
+                        <div class="flex justify-between items-center">
+                            <span class="flex-1">
+                                <span class="font-medium">Bab 2:</span> Membaca Kata
+                            </span>
+                            <a href="mi/bahasa-indonesia/1/membaca-kata.html" class="ml-3 learn-btn text-white px-4 py-2 rounded-lg text-sm font-medium">
+                                📚 Pelajari
+                            </a>
+                        </div>
+                    </div>
+                    <div class="chapter-item p-3 rounded-lg border border-gray-200">
+                        <div class="flex justify-between items-center">
+                            <span class="flex-1">
+                                <span class="font-medium">Bab 3:</span> Menulis Sederhana
+                            </span>
+                            <a href="mi/bahasa-indonesia/1/menulis-sederhana.html" class="ml-3 learn-btn text-white px-4 py-2 rounded-lg text-sm font-medium">
+                                📚 Pelajari
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PKn MI Kelas 1 -->
+            <div class="subject-card rounded-2xl shadow-xl p-6 jenjang-MI kategori-umum" data-jenjang="MI" data-kategori="umum" data-classes="1">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="flex items-center">
+                        <div class="w-14 h-14 bg-gradient-to-br from-yellow-500 to-amber-600 rounded-xl flex items-center justify-center text-white text-2xl mr-4">
+                            🏛️
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-800">PKn</h3>
+                            <div class="grade-badge text-white px-3 py-1 rounded-full text-sm font-medium mt-1">MI Kelas 1</div>
+                        </div>
+                    </div>
+                </div>
+                <p class="text-gray-600 mb-4">Pendidikan Kewarganegaraan dasar</p>
+                <div class="space-y-3">
+                    <div class="chapter-item p-3 rounded-lg border border-gray-200">
+                        <div class="flex justify-between items-center">
+                            <span class="flex-1">
+                                <span class="font-medium">Bab 1:</span> Hidup Rukun
+                            </span>
+                            <a href="mi/pkn/1/hidup-rukun.html" class="ml-3 learn-btn text-white px-4 py-2 rounded-lg text-sm font-medium">
+                                📚 Pelajari
+                            </a>
+                        </div>
+                    </div>
+                    <div class="chapter-item p-3 rounded-lg border border-gray-200">
+                        <div class="flex justify-between items-center">
+                            <span class="flex-1">
+                                <span class="font-medium">Bab 2:</span> Tata Tertib
+                            </span>
+                            <a href="mi/pkn/1/tata-tertib.html" class="ml-3 learn-btn text-white px-4 py-2 rounded-lg text-sm font-medium">
+                                📚 Pelajari
+                            </a>
+                        </div>
+                    </div>
+                    <div class="chapter-item p-3 rounded-lg border border-gray-200">
+                        <div class="flex justify-between items-center">
+                            <span class="flex-1">
+                                <span class="font-medium">Bab 3:</span> Gotong Royong
+                            </span>
+                            <a href="mi/pkn/1/gotong-royong.html" class="ml-3 learn-btn text-white px-4 py-2 rounded-lg text-sm font-medium">
+                                📚 Pelajari
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ========== KELAS 2 MI ========== -->
+            
+            <!-- Al-Quran Hadis MI Kelas 2 -->
+            <div class="subject-card rounded-2xl shadow-xl p-6 jenjang-MI kategori-pai" data-jenjang="MI" data-kategori="pai" data-classes="2">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="flex items-center">
+                        <div class="w-14 h-14 bg-gradient-to-br from-green-500 to-emerald-600 rounded-xl flex items-center justify-center text-white text-2xl mr-4">
+                            📖
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-800">Al-Quran Hadis</h3>
+                            <div class="grade-badge text-white px-3 py-1 rounded-full text-sm font-medium mt-1">MI Kelas 2</div>
+                        </div>
+                    </div>
+                </div>
+                <p class="text-gray-600 mb-4">Membaca dan memahami ayat-ayat sederhana</p>
+                <div class="space-y-3">
+                    <div class="chapter-item p-3 rounded-lg border border-gray-200">
+                        <div class="flex justify-between items-center">
+                            <span class="flex-1">
+                                <span class="font-medium">Bab 1:</span> Surat Al-Fatihah
+                            </span>
+                            <a href="mi/al-quran-hadis/2/surat-al-fatihah.html" class="ml-3 learn-btn text-white px-4 py-2 rounded-lg text-sm font-medium">
+                                📚 Pelajari
+                            </a>
+                        </div>
+                    </div>
+                    <div class="chapter-item p-3 rounded-lg border border-gray-200">
+                        <div class="flex justify-between items-center">
+                            <span class="flex-1">
+                                <span class="font-medium">Bab 2:</span> Surat An-Nas
+                            </span>
+                            <a href="mi/al-quran-hadis/2/surat-an-nas.html" class="ml-3 learn-btn text-white px-4 py-2 rounded-lg text-sm font-medium">
+                                📚 Pelajari
+                            </a>
+                        </div>
+                    </div>
+                    <div class="chapter-item p-3 rounded-lg border border-gray-200">
+                        <div class="flex justify-between items-center">
+                            <span class="flex-1">
+                                <span class="font-medium">Bab 3:</span> Surat Al-Falaq
+                            </span>
+                            <a href="mi/al-quran-hadis/2/surat-al-falaq.html" class="ml-3 learn-btn text-white px-4 py-2 rounded-lg text-sm font-medium">
+                                📚 Pelajari
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Akidah Akhlak MI Kelas 2 -->
+            <div class="subject-card rounded-2xl shadow-xl p-6 jenjang-MI kategori-pai" data-jenjang="MI" data-kategori="pai" data-classes="2">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="flex items-center">
+                        <div class="w-14 h-14 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl flex items-center justify-center text-white text-2xl mr-4">
+                            🤲
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-800">Akidah Akhlak</h3>
+                            <div class="grade-badge text-white px-3 py-1 rounded-full text-sm font-medium mt-1">MI Kelas 2</div>
+                        </div>
+                    </div>
+                </div>
+                <p class="text-gray-600 mb-4">Rukun Iman dan akhlak mulia</p>
+                <div class="space-y-3">
+                    <div class="chapter-item p-3 rounded-lg border border-gray-200">
+                        <div class="flex justify-between items-center">
+                            <span class="flex-1">
+                                <span class="font-medium">Bab 1:</span> Rukun Iman
+                            </span>
+                            <a href="mi/akidah-akhlak/2/rukun-iman.html" class="ml-3 learn-btn text-white px-4 py-2 rounded-lg text-sm font-medium">
+                                📚 Pelajari
+                            </a>
+                        </div>
+                    </div>
+                    <div class="chapter-item p-3 rounded-lg border border-gray-200">
+                        <div class="flex justify-between items-center">
+                            <span class="flex-1">
+                                <span class="font-medium">Bab 2:</span> Sifat Jujur
+                            </span>
+                            <a href="mi/akidah-akhlak/2/sifat-jujur.html" class="ml-3 learn-btn text-white px-4 py-2 rounded-lg text-sm font-medium">
+                                📚 Pelajari
+                            </a>
+                        </div>
+                    </div>
+                    <div class="chapter-item p-3 rounded-lg border border-gray-200">
+                        <div class="flex justify-between items-center">
+                            <span class="flex-1">
+                                <span class="font-medium">Bab 3:</span> Hormat pada Orang Tua
+                            </span>
+                            <a href="mi/akidah-akhlak/2/hormat-pada-orang-tua.html" class="ml-3 learn-btn text-white px-4 py-2 rounded-lg text-sm font-medium">
+                                📚 Pelajari
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Matematika MI Kelas 2 -->
+            <div class="subject-card rounded-2xl shadow-xl p-6 jenjang-MI kategori-sains" data-jenjang="MI" data-kategori="sains" data-classes="2">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="flex items-center">
+                        <div class="w-14 h-14 bg-gradient-to-br from-red-500 to-pink-600 rounded-xl flex items-center justify-center text-white text-2xl mr-4">
+                            🔢
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-800">Matematika</h3>
+                            <div class="grade-badge text-white px-3 py-1 rounded-full text-sm font-medium mt-1">MI Kelas 2</div>
+                        </div>
+                    </div>
+                </div>
+                <p class="text-gray-600 mb-4">Operasi hitung dasar</p>
+                <div class="space-y-3">
+                    <div class="chapter-item p-3 rounded-lg border border-gray-200">
+                        <div class="flex justify-between items-center">
+                            <span class="flex-1">
+                                <span class="font-medium">Bab 1:</span> Bilangan 1-100
+                            </span>
+                            <a href="mi/matematika/2/bilangan-1-100.html" class="ml-3 learn-btn text-white px-4 py-2 rounded-lg text-sm font-medium">
+                                📚 Pelajari
+                            </a>
+                        </div>
+                    </div>
+                    <div class="chapter-item p-3 rounded-lg border border-gray-200">
+                        <div class="flex justify-between items-center">
+                            <span class="flex-1">
+                                <span class="font-medium">Bab 2:</span> Penjumlahan dan Pengurangan
+                            </span>
+                            <a href="mi/matematika/2/penjumlahan-dan-pengurangan.html" class="ml-3 learn-btn text-white px-4 py-2 rounded-lg text-sm font-medium">
+                                📚 Pelajari
+                            </a>
+                        </div>
+                    </div>
+                    <div class="chapter-item p-3 rounded-lg border border-gray-200">
+                        <div class="flex justify-between items-center">
+                            <span class="flex-1">
+                                <span class="font-medium">Bab 3:</span> Pengukuran Waktu
+                            </span>
+                            <a href="mi/matematika/2/pengukuran-waktu.html" class="ml-3 learn-btn text-white px-4 py-2 rounded-lg text-sm font-medium">
+                                📚 Pelajari
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bahasa Indonesia MI Kelas 2 -->
+            <div class="subject-card rounded-2xl shadow-xl p-6 jenjang-MI kategori-bahasa" data-jenjang="MI" data-kategori="bahasa" data-classes="2">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="flex items-center">
+                        <div class="w-14 h-14 bg-gradient-to-br from-rose-500 to-red-600 rounded-xl flex items-center justify-center text-white text-2xl mr-4">
+                            📝
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-800">Bahasa Indonesia</h3>
+                            <div class="grade-badge text-white px-3 py-1 rounded-full text-sm font-medium mt-1">MI Kelas 2</div>
+                        </div>
+                    </div>
+                </div>
+                <p class="text-gray-600 mb-4">Membaca dan menulis kalimat</p>
+                <div class="space-y-3">
+                    <div class="chapter-item p-3 rounded-lg border border-gray-200">
+                        <div class="flex justify-between items-center">
+                            <span class="flex-1">
+                                <span class="font-medium">Bab 1:</span> Membaca Kalimat
+                            </span>
+                            <a href="mi/bahasa-indonesia/2/membaca-kalimat.html" class="ml-3 learn-btn text-white px-4 py-2 rounded-lg text-sm font-medium">
+                                📚 Pelajari
+                            </a>
+                        </div>
+                    </div>
+                    <div class="chapter-item p-3 rounded-lg border border-gray-200">
+                        <div class="flex justify-between items-center">
+                            <span class="flex-1">
+                                <span class="font-medium">Bab 2:</span> Menulis Kalimat
+                            </span>
+                            <a href="mi/bahasa-indonesia/2/menulis-kalimat.html" class="ml-3 learn-btn text-white px-4 py-2 rounded-lg text-sm font-medium">
+                                📚 Pelajari
+                            </a>
+                        </div>
+                    </div>
+                    <div class="chapter-item p-3 rounded-lg border border-gray-200">
+                        <div class="flex justify-between items-center">
+                            <span class="flex-1">
+                                <span class="font-medium">Bab 3:</span> Cerita Sederhana
+                            </span>
+                            <a href="mi/bahasa-indonesia/2/cerita-sederhana.html" class="ml-3 learn-btn text-white px-4 py-2 rounded-lg text-sm font-medium">
+                                📚 Pelajari
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ========== KELAS 7 MTs ========== -->
+            
+            <!-- Al-Quran Hadis MTs Kelas 7 -->
+            <div class="subject-card rounded-2xl shadow-xl p-6 jenjang-MTs kategori-pai" data-jenjang="MTs" data-kategori="pai" data-classes="7">
                 <div class="flex items-center justify-between mb-4">
                     <div class="flex items-center">
                         <div class="w-14 h-14 bg-gradient-to-br from-green-600 to-emerald-700 rounded-xl flex items-center justify-center text-white text-2xl mr-4">
@@ -339,7 +809,7 @@
                         </div>
                         <div>
                             <h3 class="text-xl font-bold text-gray-800">Al-Quran Hadis</h3>
-                            <div class="grade-badge text-white px-3 py-1 rounded-full text-sm font-medium mt-1">MTs</div>
+                            <div class="grade-badge text-white px-3 py-1 rounded-full text-sm font-medium mt-1">MTs Kelas 7</div>
                         </div>
                     </div>
                 </div>
@@ -347,30 +817,30 @@
                 <div class="space-y-3">
                     <div class="chapter-item p-3 rounded-lg border border-gray-200">
                         <div class="flex justify-between items-center">
-                            <span class="cursor-pointer flex-1" onclick="openChapter('Al-Quran Hadis', 'Tajwid dan Qiraah')">
-                                <span class="font-medium">Bab 1:</span> Tajwid dan Qiraah
+                            <span class="flex-1">
+                                <span class="font-medium">Bab 1:</span> Hukum Bacaan Qalqalah
                             </span>
-                            <a href="mts/al-quran-hadis/tajwid-dan-qiraah.html" class="ml-3 learn-btn text-white px-4 py-2 rounded-lg text-sm font-medium">
+                            <a href="mts/al-quran-hadis/7/hukum-bacaan-qalqalah.html" class="ml-3 learn-btn text-white px-4 py-2 rounded-lg text-sm font-medium">
                                 📚 Pelajari
                             </a>
                         </div>
                     </div>
                     <div class="chapter-item p-3 rounded-lg border border-gray-200">
                         <div class="flex justify-between items-center">
-                            <span class="cursor-pointer flex-1">
-                                <span class="font-medium">Bab 2:</span> Tafsir Ayat Pilihan
+                            <span class="flex-1">
+                                <span class="font-medium">Bab 2:</span> Surat Al-Baqarah Ayat 30
                             </span>
-                            <a href="mts/al-quran-hadis/tafsir-ayat-pilihan.html" class="ml-3 learn-btn text-white px-4 py-2 rounded-lg text-sm font-medium">
+                            <a href="mts/al-quran-hadis/7/surat-al-baqarah-ayat-30.html" class="ml-3 learn-btn text-white px-4 py-2 rounded-lg text-sm font-medium">
                                 📚 Pelajari
                             </a>
                         </div>
                     </div>
                     <div class="chapter-item p-3 rounded-lg border border-gray-200">
                         <div class="flex justify-between items-center">
-                            <span class="cursor-pointer flex-1">
-                                <span class="font-medium">Bab 3:</span> Hadis Akhlak
+                            <span class="flex-1">
+                                <span class="font-medium">Bab 3:</span> Hadis tentang Iman
                             </span>
-                            <a href="mts/al-quran-hadis/hadis-akhlak.html" class="ml-3 learn-btn text-white px-4 py-2 rounded-lg text-sm font-medium">
+                            <a href="mts/al-quran-hadis/7/hadis-tentang-iman.html" class="ml-3 learn-btn text-white px-4 py-2 rounded-lg text-sm font-medium">
                                 📚 Pelajari
                             </a>
                         </div>
@@ -378,47 +848,47 @@
                 </div>
             </div>
 
-            <!-- MTs - IPA -->
-            <div class="subject-card rounded-2xl shadow-xl p-6 jenjang-MTs kategori-umum" data-jenjang="MTs" data-kategori="umum">
+            <!-- Matematika MTs Kelas 7 -->
+            <div class="subject-card rounded-2xl shadow-xl p-6 jenjang-MTs kategori-sains" data-jenjang="MTs" data-kategori="sains" data-classes="7">
                 <div class="flex items-center justify-between mb-4">
                     <div class="flex items-center">
-                        <div class="w-14 h-14 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-xl flex items-center justify-center text-white text-2xl mr-4">
-                            🔬
+                        <div class="w-14 h-14 bg-gradient-to-br from-red-600 to-pink-700 rounded-xl flex items-center justify-center text-white text-2xl mr-4">
+                            🔢
                         </div>
                         <div>
-                            <h3 class="text-xl font-bold text-gray-800">IPA</h3>
-                            <div class="grade-badge text-white px-3 py-1 rounded-full text-sm font-medium mt-1">MTs</div>
+                            <h3 class="text-xl font-bold text-gray-800">Matematika</h3>
+                            <div class="grade-badge text-white px-3 py-1 rounded-full text-sm font-medium mt-1">MTs Kelas 7</div>
                         </div>
                     </div>
                 </div>
-                <p class="text-gray-600 mb-4">Ilmu Pengetahuan Alam terpadu</p>
+                <p class="text-gray-600 mb-4">Aljabar dan geometri dasar</p>
                 <div class="space-y-3">
                     <div class="chapter-item p-3 rounded-lg border border-gray-200">
                         <div class="flex justify-between items-center">
-                            <span class="cursor-pointer flex-1" onclick="openChapter('IPA', 'Makhluk Hidup dan Lingkungan')">
-                                <span class="font-medium">Bab 1:</span> Makhluk Hidup dan Lingkungan
+                            <span class="flex-1">
+                                <span class="font-medium">Bab 1:</span> Bilangan Bulat
                             </span>
-                            <a href="mts/ipa/makhluk-hidup-dan-lingkungan.html" class="ml-3 learn-btn text-white px-4 py-2 rounded-lg text-sm font-medium">
+                            <a href="mts/matematika/7/bilangan-bulat.html" class="ml-3 learn-btn text-white px-4 py-2 rounded-lg text-sm font-medium">
                                 📚 Pelajari
                             </a>
                         </div>
                     </div>
                     <div class="chapter-item p-3 rounded-lg border border-gray-200">
                         <div class="flex justify-between items-center">
-                            <span class="cursor-pointer flex-1">
-                                <span class="font-medium">Bab 2:</span> Zat dan Perubahannya
+                            <span class="flex-1">
+                                <span class="font-medium">Bab 2:</span> Himpunan
                             </span>
-                            <a href="mts/ipa/zat-dan-perubahannya.html" class="ml-3 learn-btn text-white px-4 py-2 rounded-lg text-sm font-medium">
+                            <a href="mts/matematika/7/himpunan.html" class="ml-3 learn-btn text-white px-4 py-2 rounded-lg text-sm font-medium">
                                 📚 Pelajari
                             </a>
                         </div>
                     </div>
                     <div class="chapter-item p-3 rounded-lg border border-gray-200">
                         <div class="flex justify-between items-center">
-                            <span class="cursor-pointer flex-1">
-                                <span class="font-medium">Bab 3:</span> Energi dan Perubahannya
+                            <span class="flex-1">
+                                <span class="font-medium">Bab 3:</span> Bentuk Aljabar
                             </span>
-                            <a href="mts/ipa/energi-dan-perubahannya.html" class="ml-3 learn-btn text-white px-4 py-2 rounded-lg text-sm font-medium">
+                            <a href="mts/matematika/7/bentuk-aljabar.html" class="ml-3 learn-btn text-white px-4 py-2 rounded-lg text-sm font-medium">
                                 📚 Pelajari
                             </a>
                         </div>
@@ -426,47 +896,95 @@
                 </div>
             </div>
 
-            <!-- MA - Fikih -->
-            <div class="subject-card rounded-2xl shadow-xl p-6 jenjang-MA kategori-pai" data-jenjang="MA" data-kategori="pai">
+            <!-- Bahasa Inggris MTs Kelas 7 -->
+            <div class="subject-card rounded-2xl shadow-xl p-6 jenjang-MTs kategori-bahasa" data-jenjang="MTs" data-kategori="bahasa" data-classes="7">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="flex items-center">
+                        <div class="w-14 h-14 bg-gradient-to-br from-blue-600 to-indigo-700 rounded-xl flex items-center justify-center text-white text-2xl mr-4">
+                            🇬🇧
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-800">Bahasa Inggris</h3>
+                            <div class="grade-badge text-white px-3 py-1 rounded-full text-sm font-medium mt-1">MTs Kelas 7</div>
+                        </div>
+                    </div>
+                </div>
+                <p class="text-gray-600 mb-4">Dasar-dasar bahasa Inggris</p>
+                <div class="space-y-3">
+                    <div class="chapter-item p-3 rounded-lg border border-gray-200">
+                        <div class="flex justify-between items-center">
+                            <span class="flex-1">
+                                <span class="font-medium">Bab 1:</span> Greeting and Introduction
+                            </span>
+                            <a href="mts/bahasa-inggris/7/greeting-and-introduction.html" class="ml-3 learn-btn text-white px-4 py-2 rounded-lg text-sm font-medium">
+                                📚 Pelajari
+                            </a>
+                        </div>
+                    </div>
+                    <div class="chapter-item p-3 rounded-lg border border-gray-200">
+                        <div class="flex justify-between items-center">
+                            <span class="flex-1">
+                                <span class="font-medium">Bab 2:</span> Simple Present Tense
+                            </span>
+                            <a href="mts/bahasa-inggris/7/simple-present-tense.html" class="ml-3 learn-btn text-white px-4 py-2 rounded-lg text-sm font-medium">
+                                📚 Pelajari
+                            </a>
+                        </div>
+                    </div>
+                    <div class="chapter-item p-3 rounded-lg border border-gray-200">
+                        <div class="flex justify-between items-center">
+                            <span class="flex-1">
+                                <span class="font-medium">Bab 3:</span> Describing People
+                            </span>
+                            <a href="mts/bahasa-inggris/7/describing-people.html" class="ml-3 learn-btn text-white px-4 py-2 rounded-lg text-sm font-medium">
+                                📚 Pelajari
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Informatika MTs Kelas 7 -->
+            <div class="subject-card rounded-2xl shadow-xl p-6 jenjang-MTs kategori-sains" data-jenjang="MTs" data-kategori="sains" data-classes="7">
                 <div class="flex items-center justify-between mb-4">
                     <div class="flex items-center">
                         <div class="w-14 h-14 bg-gradient-to-br from-purple-600 to-violet-700 rounded-xl flex items-center justify-center text-white text-2xl mr-4">
-                            🕌
+                            💻
                         </div>
                         <div>
-                            <h3 class="text-xl font-bold text-gray-800">Fikih</h3>
-                            <div class="grade-badge text-white px-3 py-1 rounded-full text-sm font-medium mt-1">MA</div>
+                            <h3 class="text-xl font-bold text-gray-800">Informatika</h3>
+                            <div class="grade-badge text-white px-3 py-1 rounded-full text-sm font-medium mt-1">MTs Kelas 7</div>
                         </div>
                     </div>
                 </div>
-                <p class="text-gray-600 mb-4">Fikih lanjutan dan hukum Islam kontemporer</p>
+                <p class="text-gray-600 mb-4">Pengenalan teknologi informasi</p>
                 <div class="space-y-3">
                     <div class="chapter-item p-3 rounded-lg border border-gray-200">
                         <div class="flex justify-between items-center">
-                            <span class="cursor-pointer flex-1" onclick="openChapter('Fikih', 'Fikih Muamalah')">
-                                <span class="font-medium">Bab 1:</span> Fikih Muamalah
+                            <span class="flex-1">
+                                <span class="font-medium">Bab 1:</span> Pengenalan Komputer
                             </span>
-                            <a href="ma/fikih/fikih-muamalah.html" class="ml-3 learn-btn text-white px-4 py-2 rounded-lg text-sm font-medium">
+                            <a href="mts/informatika/7/pengenalan-komputer.html" class="ml-3 learn-btn text-white px-4 py-2 rounded-lg text-sm font-medium">
                                 📚 Pelajari
                             </a>
                         </div>
                     </div>
                     <div class="chapter-item p-3 rounded-lg border border-gray-200">
                         <div class="flex justify-between items-center">
-                            <span class="cursor-pointer flex-1">
-                                <span class="font-medium">Bab 2:</span> Fikih Jinayat
+                            <span class="flex-1">
+                                <span class="font-medium">Bab 2:</span> Sistem Operasi
                             </span>
-                            <a href="ma/fikih/fikih-jinayat.html" class="ml-3 learn-btn text-white px-4 py-2 rounded-lg text-sm font-medium">
+                            <a href="mts/informatika/7/sistem-operasi.html" class="ml-3 learn-btn text-white px-4 py-2 rounded-lg text-sm font-medium">
                                 📚 Pelajari
                             </a>
                         </div>
                     </div>
                     <div class="chapter-item p-3 rounded-lg border border-gray-200">
                         <div class="flex justify-between items-center">
-                            <span class="cursor-pointer flex-1">
-                                <span class="font-medium">Bab 3:</span> Fikih Siyasah
+                            <span class="flex-1">
+                                <span class="font-medium">Bab 3:</span> Internet dan Email
                             </span>
-                            <a href="ma/fikih/fikih-siyasah.html" class="ml-3 learn-btn text-white px-4 py-2 rounded-lg text-sm font-medium">
+                            <a href="mts/informatika/7/internet-dan-email.html" class="ml-3 learn-btn text-white px-4 py-2 rounded-lg text-sm font-medium">
                                 📚 Pelajari
                             </a>
                         </div>
@@ -474,47 +992,49 @@
                 </div>
             </div>
 
-            <!-- MA - Matematika Peminatan -->
-            <div class="subject-card rounded-2xl shadow-xl p-6 jenjang-MA kategori-ipa" data-jenjang="MA" data-kategori="ipa">
+            <!-- ========== KELAS 10 MA ========== -->
+            
+            <!-- Al-Quran Hadis MA Kelas 10 -->
+            <div class="subject-card rounded-2xl shadow-xl p-6 jenjang-MA kategori-pai" data-jenjang="MA" data-kategori="pai" data-classes="10">
                 <div class="flex items-center justify-between mb-4">
                     <div class="flex items-center">
-                        <div class="w-14 h-14 bg-gradient-to-br from-red-500 to-pink-600 rounded-xl flex items-center justify-center text-white text-2xl mr-4">
-                            📊
+                        <div class="w-14 h-14 bg-gradient-to-br from-green-700 to-emerald-800 rounded-xl flex items-center justify-center text-white text-2xl mr-4">
+                            📖
                         </div>
                         <div>
-                            <h3 class="text-xl font-bold text-gray-800">Matematika Peminatan</h3>
-                            <div class="grade-badge text-white px-3 py-1 rounded-full text-sm font-medium mt-1">MA</div>
+                            <h3 class="text-xl font-bold text-gray-800">Al-Quran Hadis</h3>
+                            <div class="grade-badge text-white px-3 py-1 rounded-full text-sm font-medium mt-1">MA Kelas 10</div>
                         </div>
                     </div>
                 </div>
-                <p class="text-gray-600 mb-4">Matematika lanjutan untuk peminatan IPA</p>
+                <p class="text-gray-600 mb-4">Ulumul Quran dan Ulumul Hadis</p>
                 <div class="space-y-3">
                     <div class="chapter-item p-3 rounded-lg border border-gray-200">
                         <div class="flex justify-between items-center">
-                            <span class="cursor-pointer flex-1" onclick="openChapter('Matematika Peminatan', 'Limit Fungsi')">
-                                <span class="font-medium">Bab 1:</span> Limit Fungsi
+                            <span class="flex-1">
+                                <span class="font-medium">Bab 1:</span> Sejarah Al-Quran
                             </span>
-                            <a href="ma/matematika-peminatan/limit-fungsi.html" class="ml-3 learn-btn text-white px-4 py-2 rounded-lg text-sm font-medium">
+                            <a href="ma/al-quran-hadis/10/sejarah-al-quran.html" class="ml-3 learn-btn text-white px-4 py-2 rounded-lg text-sm font-medium">
                                 📚 Pelajari
                             </a>
                         </div>
                     </div>
                     <div class="chapter-item p-3 rounded-lg border border-gray-200">
                         <div class="flex justify-between items-center">
-                            <span class="cursor-pointer flex-1">
-                                <span class="font-medium">Bab 2:</span> Turunan
+                            <span class="flex-1">
+                                <span class="font-medium">Bab 2:</span> Fungsi Al-Quran
                             </span>
-                            <a href="ma/matematika-peminatan/turunan.html" class="ml-3 learn-btn text-white px-4 py-2 rounded-lg text-sm font-medium">
+                            <a href="ma/al-quran-hadis/10/fungsi-al-quran.html" class="ml-3 learn-btn text-white px-4 py-2 rounded-lg text-sm font-medium">
                                 📚 Pelajari
                             </a>
                         </div>
                     </div>
                     <div class="chapter-item p-3 rounded-lg border border-gray-200">
                         <div class="flex justify-between items-center">
-                            <span class="cursor-pointer flex-1">
-                                <span class="font-medium">Bab 3:</span> Integral
+                            <span class="flex-1">
+                                <span class="font-medium">Bab 3:</span> Sejarah Hadis
                             </span>
-                            <a href="ma/matematika-peminatan/integral.html" class="ml-3 learn-btn text-white px-4 py-2 rounded-lg text-sm font-medium">
+                            <a href="ma/al-quran-hadis/10/sejarah-hadis.html" class="ml-3 learn-btn text-white px-4 py-2 rounded-lg text-sm font-medium">
                                 📚 Pelajari
                             </a>
                         </div>
@@ -522,53 +1042,150 @@
                 </div>
             </div>
 
-            <!-- MA - Ekonomi -->
-            <div class="subject-card rounded-2xl shadow-xl p-6 jenjang-MA kategori-ips" data-jenjang="MA" data-kategori="ips">
+            <!-- Matematika MA Kelas 10 -->
+            <div class="subject-card rounded-2xl shadow-xl p-6 jenjang-MA kategori-sains" data-jenjang="MA" data-kategori="sains" data-classes="10">
                 <div class="flex items-center justify-between mb-4">
                     <div class="flex items-center">
-                        <div class="w-14 h-14 bg-gradient-to-br from-yellow-500 to-orange-600 rounded-xl flex items-center justify-center text-white text-2xl mr-4">
-                            💰
+                        <div class="w-14 h-14 bg-gradient-to-br from-red-700 to-pink-800 rounded-xl flex items-center justify-center text-white text-2xl mr-4">
+                            🔢
                         </div>
                         <div>
-                            <h3 class="text-xl font-bold text-gray-800">Ekonomi</h3>
-                            <div class="grade-badge text-white px-3 py-1 rounded-full text-sm font-medium mt-1">MA</div>
+                            <h3 class="text-xl font-bold text-gray-800">Matematika</h3>
+                            <div class="grade-badge text-white px-3 py-1 rounded-full text-sm font-medium mt-1">MA Kelas 10</div>
                         </div>
                     </div>
                 </div>
-                <p class="text-gray-600 mb-4">Ilmu ekonomi dan sistem perekonomian</p>
+                <p class="text-gray-600 mb-4">Fungsi dan trigonometri</p>
                 <div class="space-y-3">
                     <div class="chapter-item p-3 rounded-lg border border-gray-200">
                         <div class="flex justify-between items-center">
-                            <span class="cursor-pointer flex-1" onclick="openChapter('Ekonomi', 'Konsep Dasar Ekonomi')">
-                                <span class="font-medium">Bab 1:</span> Konsep Dasar Ekonomi
+                            <span class="flex-1">
+                                <span class="font-medium">Bab 1:</span> Eksponen dan Logaritma
                             </span>
-                            <a href="ma/ekonomi/konsep-dasar-ekonomi.html" class="ml-3 learn-btn text-white px-4 py-2 rounded-lg text-sm font-medium">
+                            <a href="ma/matematika/10/eksponen-dan-logaritma.html" class="ml-3 learn-btn text-white px-4 py-2 rounded-lg text-sm font-medium">
                                 📚 Pelajari
                             </a>
                         </div>
                     </div>
                     <div class="chapter-item p-3 rounded-lg border border-gray-200">
                         <div class="flex justify-between items-center">
-                            <span class="cursor-pointer flex-1" onclick="openChapter('Ekonomi', 'Sistem Ekonomi')">
-                                <span class="font-medium">Bab 2:</span> Sistem Ekonomi
+                            <span class="flex-1">
+                                <span class="font-medium">Bab 2:</span> Fungsi Kuadrat
                             </span>
-                            <a href="ma/ekonomi/sistem-ekonomi.html" class="ml-3 learn-btn text-white px-4 py-2 rounded-lg text-sm font-medium">
+                            <a href="ma/matematika/10/fungsi-kuadrat.html" class="ml-3 learn-btn text-white px-4 py-2 rounded-lg text-sm font-medium">
                                 📚 Pelajari
                             </a>
                         </div>
                     </div>
                     <div class="chapter-item p-3 rounded-lg border border-gray-200">
                         <div class="flex justify-between items-center">
-                            <span class="cursor-pointer flex-1" onclick="openChapter('Ekonomi', 'Pasar dan Harga')">
-                                <span class="font-medium">Bab 3:</span> Pasar dan Harga
+                            <span class="flex-1">
+                                <span class="font-medium">Bab 3:</span> Trigonometri
                             </span>
-                            <a href="ma/ekonomi/pasar-dan-harga.html" class="ml-3 learn-btn text-white px-4 py-2 rounded-lg text-sm font-medium">
+                            <a href="ma/matematika/10/trigonometri.html" class="ml-3 learn-btn text-white px-4 py-2 rounded-lg text-sm font-medium">
                                 📚 Pelajari
                             </a>
                         </div>
                     </div>
                 </div>
             </div>
+
+            <!-- Bahasa Inggris MA Kelas 10 -->
+            <div class="subject-card rounded-2xl shadow-xl p-6 jenjang-MA kategori-bahasa" data-jenjang="MA" data-kategori="bahasa" data-classes="10">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="flex items-center">
+                        <div class="w-14 h-14 bg-gradient-to-br from-blue-700 to-indigo-800 rounded-xl flex items-center justify-center text-white text-2xl mr-4">
+                            🇬🇧
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-800">Bahasa Inggris</h3>
+                            <div class="grade-badge text-white px-3 py-1 rounded-full text-sm font-medium mt-1">MA Kelas 10</div>
+                        </div>
+                    </div>
+                </div>
+                <p class="text-gray-600 mb-4">Grammar dan writing lanjutan</p>
+                <div class="space-y-3">
+                    <div class="chapter-item p-3 rounded-lg border border-gray-200">
+                        <div class="flex justify-between items-center">
+                            <span class="flex-1">
+                                <span class="font-medium">Bab 1:</span> Narrative Text
+                            </span>
+                            <a href="ma/bahasa-inggris/10/narrative-text.html" class="ml-3 learn-btn text-white px-4 py-2 rounded-lg text-sm font-medium">
+                                📚 Pelajari
+                            </a>
+                        </div>
+                    </div>
+                    <div class="chapter-item p-3 rounded-lg border border-gray-200">
+                        <div class="flex justify-between items-center">
+                            <span class="flex-1">
+                                <span class="font-medium">Bab 2:</span> Recount Text
+                            </span>
+                            <a href="ma/bahasa-inggris/10/recount-text.html" class="ml-3 learn-btn text-white px-4 py-2 rounded-lg text-sm font-medium">
+                                📚 Pelajari
+                            </a>
+                        </div>
+                    </div>
+                    <div class="chapter-item p-3 rounded-lg border border-gray-200">
+                        <div class="flex justify-between items-center">
+                            <span class="flex-1">
+                                <span class="font-medium">Bab 3:</span> Descriptive Text
+                            </span>
+                            <a href="ma/bahasa-inggris/10/descriptive-text.html" class="ml-3 learn-btn text-white px-4 py-2 rounded-lg text-sm font-medium">
+                                📚 Pelajari
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Informatika MA Kelas 10 -->
+            <div class="subject-card rounded-2xl shadow-xl p-6 jenjang-MA kategori-sains" data-jenjang="MA" data-kategori="sains" data-classes="10">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="flex items-center">
+                        <div class="w-14 h-14 bg-gradient-to-br from-purple-700 to-violet-800 rounded-xl flex items-center justify-center text-white text-2xl mr-4">
+                            💻
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-800">Informatika</h3>
+                            <div class="grade-badge text-white px-3 py-1 rounded-full text-sm font-medium mt-1">MA Kelas 10</div>
+                        </div>
+                    </div>
+                </div>
+                <p class="text-gray-600 mb-4">Pemrograman dan database</p>
+                <div class="space-y-3">
+                    <div class="chapter-item p-3 rounded-lg border border-gray-200">
+                        <div class="flex justify-between items-center">
+                            <span class="flex-1">
+                                <span class="font-medium">Bab 1:</span> Algoritma dan Pemrograman
+                            </span>
+                            <a href="ma/informatika/10/algoritma-dan-pemrograman.html" class="ml-3 learn-btn text-white px-4 py-2 rounded-lg text-sm font-medium">
+                                📚 Pelajari
+                            </a>
+                        </div>
+                    </div>
+                    <div class="chapter-item p-3 rounded-lg border border-gray-200">
+                        <div class="flex justify-between items-center">
+                            <span class="flex-1">
+                                <span class="font-medium">Bab 2:</span> Struktur Data
+                            </span>
+                            <a href="ma/informatika/10/struktur-data.html" class="ml-3 learn-btn text-white px-4 py-2 rounded-lg text-sm font-medium">
+                                📚 Pelajari
+                            </a>
+                        </div>
+                    </div>
+                    <div class="chapter-item p-3 rounded-lg border border-gray-200">
+                        <div class="flex justify-between items-center">
+                            <span class="flex-1">
+                                <span class="font-medium">Bab 3:</span> Database
+                            </span>
+                            <a href="ma/informatika/10/database.html" class="ml-3 learn-btn text-white px-4 py-2 rounded-lg text-sm font-medium">
+                                📚 Pelajari
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
 
         <!-- No Results Message -->
@@ -579,26 +1196,10 @@
         </div>
     </main>
 
-    <!-- Modal for Chapter Details -->
-    <div id="chapterModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
-        <div class="bg-white rounded-2xl p-8 max-w-3xl w-full mx-4 max-h-96 overflow-y-auto shadow-2xl">
-            <div class="flex justify-between items-center mb-6">
-                <h2 id="modalTitle" class="text-3xl font-bold text-gray-800"></h2>
-                <button onclick="closeModal()" class="text-gray-500 hover:text-gray-700 text-3xl">×</button>
-            </div>
-            <div id="modalContent" class="text-gray-600 text-lg leading-relaxed">
-                <!-- Content will be populated by JavaScript -->
-            </div>
-            <div class="mt-8 flex justify-end space-x-4">
-                <button onclick="closeModal()" class="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white px-8 py-3 rounded-xl font-medium transition-all duration-200 shadow-lg">
-                    Tutup
-                </button>
-            </div>
-        </div>
-    </div>
-
     <script>
         let currentFilter = 'all';
+        let currentClassFilter = 'all';
+        let currentSubjectFilter = 'all';
 
         // Search functionality
         function performSearch() {
@@ -610,15 +1211,18 @@
                 const title = card.querySelector('h3').textContent.toLowerCase();
                 const chapters = Array.from(card.querySelectorAll('.chapter-item span')).map(span => span.textContent.toLowerCase());
                 const jenjang = card.dataset.jenjang.toLowerCase();
+                const classes = card.dataset.classes.split(',');
                 
                 const matchesSearch = searchTerm === '' || 
                     title.includes(searchTerm) || 
                     chapters.some(chapter => chapter.includes(searchTerm)) ||
                     jenjang.includes(searchTerm);
                 
-                const matchesFilter = currentFilter === 'all' || card.classList.contains(`jenjang-${currentFilter}`);
+                const matchesJenjangFilter = currentFilter === 'all' || card.classList.contains(`jenjang-${currentFilter}`);
+                const matchesClassFilter = currentClassFilter === 'all' || classes.includes(currentClassFilter);
+                const matchesSubjectFilter = currentSubjectFilter === 'all' || card.classList.contains(`kategori-${currentSubjectFilter}`);
                 
-                if (matchesSearch && matchesFilter) {
+                if (matchesSearch && matchesJenjangFilter && matchesClassFilter && matchesSubjectFilter) {
                     card.style.display = 'block';
                     visibleCount++;
                 } else {
@@ -649,63 +1253,35 @@
             performSearch();
         }
 
-        // Chapter modal functionality
-        function openChapter(subject, chapter) {
-            const modal = document.getElementById('chapterModal');
-            const title = document.getElementById('modalTitle');
-            const content = document.getElementById('modalContent');
+        // Filter by class
+        function filterByClass(classNum) {
+            currentClassFilter = classNum;
             
-            title.textContent = `${subject} - ${chapter}`;
+            // Update active class filter button
+            document.querySelectorAll('.class-selector').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
             
-            // Enhanced content for each chapter
-            const chapterContent = {
-                'Mengenal Huruf Hijaiyah': 'Mempelajari 28 huruf hijaiyah sebagai dasar membaca Al-Quran. Siswa akan belajar bentuk, bunyi, dan cara penulisan setiap huruf.',
-                'Surat-surat Pendek': 'Menghafal dan memahami makna surat-surat pendek dalam Al-Quran seperti Al-Fatihah, Al-Ikhlas, Al-Falaq, dan An-Nas.',
-                'Rukun Iman': 'Memahami enam rukun iman: iman kepada Allah, malaikat, kitab, rasul, hari akhir, dan qada qadar.',
-                'Thaharah (Bersuci)': 'Mempelajari tata cara bersuci dari hadats kecil dan besar, serta jenis-jenis najis dan cara membersihkannya.',
-                'Shalat': 'Memahami tata cara shalat lima waktu, syarat, rukun, dan sunnah-sunnah dalam shalat.',
-                'Bilangan dan Operasi Hitung': 'Mengenal bilangan cacah, operasi penjumlahan, pengurangan, perkalian, dan pembagian.',
-                'Tajwid dan Qiraah': 'Mempelajari kaidah tajwid untuk membaca Al-Quran dengan benar dan indah.',
-                'Makhluk Hidup dan Lingkungan': 'Memahami ciri-ciri makhluk hidup, klasifikasi, dan interaksi dengan lingkungan.',
-                'Fikih Muamalah': 'Mempelajari hukum-hukum Islam dalam bidang ekonomi dan transaksi.',
-                'Fikih Jinayat': 'Memahami hukum pidana Islam dan sanksi-sanksi dalam syariat.',
-                'Limit Fungsi': 'Konsep limit dalam matematika dan aplikasinya dalam menyelesaikan masalah.',
-                'Konsep Dasar Ekonomi': 'Memahami kebutuhan, kelangkaan, dan masalah pokok ekonomi.'
-            };
-            
-            content.innerHTML = `
-                <p class="mb-6">${chapterContent[chapter] || 'Konten pembelajaran untuk bab ini sedang dalam pengembangan.'}</p>
-                <div class="bg-gradient-to-r from-blue-50 to-purple-50 p-6 rounded-xl border border-blue-200">
-                    <h4 class="font-bold text-blue-800 mb-4 text-xl">📚 Materi Pembelajaran:</h4>
-                    <ul class="list-disc list-inside text-blue-700 space-y-2 text-lg">
-                        <li>Konsep dasar dan teori fundamental</li>
-                        <li>Contoh kasus dan aplikasi praktis</li>
-                        <li>Latihan soal dan pembahasan</li>
-                        <li>Evaluasi dan penilaian kompetensi</li>
-                    </ul>
-                </div>
-            `;
-            
-            modal.classList.remove('hidden');
-            modal.classList.add('flex');
+            performSearch();
         }
 
-        function closeModal() {
-            const modal = document.getElementById('chapterModal');
-            modal.classList.add('hidden');
-            modal.classList.remove('flex');
+        // Filter by subject
+        function filterBySubject(subject) {
+            currentSubjectFilter = subject;
+            
+            // Update active subject filter button
+            document.querySelectorAll('.subject-selector').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            performSearch();
         }
 
         // Initialize
         document.addEventListener('DOMContentLoaded', function() {
             performSearch();
-        });
-
-        // Close modal when clicking outside
-        document.getElementById('chapterModal').addEventListener('click', function(e) {
-            if (e.target === this) {
-                closeModal();
-            }
         });
 
         // Add search on Enter key
@@ -715,5 +1291,5 @@
             }
         });
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'972aebbca79158f8',t:'MTc1NTc4NzU5Ni4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'972b54fc37769de3',t:'MTc1NTc5MTkwNy4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
