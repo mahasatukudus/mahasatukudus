@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal Pembelajaran - Mata Pelajaran & Bab</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .subject-card {
+            transition: all 0.3s ease;
+        }
+        .subject-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+        .chapter-item {
+            transition: all 0.2s ease;
+        }
+        .chapter-item:hover {
+            background-color: #f3f4f6;
+            padding-left: 1.5rem;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
+    <!-- Header -->
+    <header class="bg-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 py-6">
+            <h1 class="text-4xl font-bold text-gray-800 text-center">
+                🎓 Portal Pembelajaran
+            </h1>
+            <p class="text-gray-600 text-center mt-2">Jelajahi berbagai mata pelajaran dan bab pembelajaran</p>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 py-8">
+        <!-- Navigation Tabs -->
+        <div class="flex flex-wrap justify-center mb-8 bg-white rounded-lg shadow-md p-2">
+            <button onclick="showCategory('all')" class="tab-btn active px-6 py-3 rounded-lg font-medium transition-all duration-200 mx-1 mb-2">
+                Semua Mata Pelajaran
+            </button>
+            <button onclick="showCategory('science')" class="tab-btn px-6 py-3 rounded-lg font-medium transition-all duration-200 mx-1 mb-2">
+                Sains & Matematika
+            </button>
+            <button onclick="showCategory('social')" class="tab-btn px-6 py-3 rounded-lg font-medium transition-all duration-200 mx-1 mb-2">
+                Sosial & Bahasa
+            </button>
+            <button onclick="showCategory('arts')" class="tab-btn px-6 py-3 rounded-lg font-medium transition-all duration-200 mx-1 mb-2">
+                Seni & Olahraga
+            </button>
+        </div>
+
+        <!-- Subjects Grid -->
+        <div id="subjects-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Matematika -->
+            <div class="subject-card bg-white rounded-xl shadow-lg p-6 category-science category-all">
+                <div class="flex items-center mb-4">
+                    <div class="w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center text-white text-2xl mr-4">
+                        📊
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800">Matematika</h3>
+                </div>
+                <p class="text-gray-600 mb-4">Pelajari konsep matematika dari dasar hingga lanjutan</p>
+                <div class="space-y-2">
+                    <div class="chapter-item p-3 rounded-lg cursor-pointer" onclick="openChapter('Matematika', 'Aljabar')">
+                        <span class="font-medium">Bab 1:</span> Aljabar
+                    </div>
+                    <div class="chapter-item p-3 rounded-lg cursor-pointer" onclick="openChapter('Matematika', 'Geometri')">
+                        <span class="font-medium">Bab 2:</span> Geometri
+                    </div>
+                    <div class="chapter-item p-3 rounded-lg cursor-pointer" onclick="openChapter('Matematika', 'Statistika')">
+                        <span class="font-medium">Bab 3:</span> Statistika
+                    </div>
+                    <div class="chapter-item p-3 rounded-lg cursor-pointer" onclick="openChapter('Matematika', 'Kalkulus')">
+                        <span class="font-medium">Bab 4:</span> Kalkulus
+                    </div>
+                </div>
+            </div>
+
+            <!-- Fisika -->
+            <div class="subject-card bg-white rounded-xl shadow-lg p-6 category-science category-all">
+                <div class="flex items-center mb-4">
+                    <div class="w-12 h-12 bg-purple-500 rounded-lg flex items-center justify-center text-white text-2xl mr-4">
+                        ⚛️
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800">Fisika</h3>
+                </div>
+                <p class="text-gray-600 mb-4">Memahami hukum-hukum alam dan fenomena fisika</p>
+                <div class="space-y-2">
+                    <div class="chapter-item p-3 rounded-lg cursor-pointer" onclick="openChapter('Fisika', 'Mekanika')">
+                        <span class="font-medium">Bab 1:</span> Mekanika
+                    </div>
+                    <div class="chapter-item p-3 rounded-lg cursor-pointer" onclick="openChapter('Fisika', 'Termodinamika')">
+                        <span class="font-medium">Bab 2:</span> Termodinamika
+                    </div>
+                    <div class="chapter-item p-3 rounded-lg cursor-pointer" onclick="openChapter('Fisika', 'Gelombang & Optik')">
+                        <span class="font-medium">Bab 3:</span> Gelombang & Optik
+                    </div>
+                    <div class="chapter-item p-3 rounded-lg cursor-pointer" onclick="openChapter('Fisika', 'Listrik & Magnet')">
+                        <span class="font-medium">Bab 4:</span> Listrik & Magnet
+                    </div>
+                </div>
+            </div>
+
+            <!-- Kimia -->
+            <div class="subject-card bg-white rounded-xl shadow-lg p-6 category-science category-all">
+                <div class="flex items-center mb-4">
+                    <div class="w-12 h-12 bg-green-500 rounded-lg flex items-center justify-center text-white text-2xl mr-4">
+                        🧪
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800">Kimia</h3>
+                </div>
+                <p class="text-gray-600 mb-4">Eksplorasi struktur materi dan reaksi kimia</p>
+                <div class="space-y-2">
+                    <div class="chapter-item p-3 rounded-lg cursor-pointer" onclick="openChapter('Kimia', 'Struktur Atom')">
+                        <span class="font-medium">Bab 1:</span> Struktur Atom
+                    </div>
+                    <div class="chapter-item p-3 rounded-lg cursor-pointer" onclick="openChapter('Kimia', 'Ikatan Kimia')">
+                        <span class="font-medium">Bab 2:</span> Ikatan Kimia
+                    </div>
+                    <div class="chapter-item p-3 rounded-lg cursor-pointer" onclick="openChapter('Kimia', 'Reaksi Kimia')">
+                        <span class="font-medium">Bab 3:</span> Reaksi Kimia
+                    </div>
+                    <div class="chapter-item p-3 rounded-lg cursor-pointer" onclick="openChapter('Kimia', 'Kimia Organik')">
+                        <span class="font-medium">Bab 4:</span> Kimia Organik
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bahasa Indonesia -->
+            <div class="subject-card bg-white rounded-xl shadow-lg p-6 category-social category-all">
+                <div class="flex items-center mb-4">
+                    <div class="w-12 h-12 bg-red-500 rounded-lg flex items-center justify-center text-white text-2xl mr-4">
+                        📚
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800">Bahasa Indonesia</h3>
+                </div>
+                <p class="text-gray-600 mb-4">Menguasai bahasa dan sastra Indonesia</p>
+                <div class="space-y-2">
+                    <div class="chapter-item p-3 rounded-lg cursor-pointer" onclick="openChapter('Bahasa Indonesia', 'Teks Narasi')">
+                        <span class="font-medium">Bab 1:</span> Teks Narasi
+                    </div>
+                    <div class="chapter-item p-3 rounded-lg cursor-pointer" onclick="openChapter('Bahasa Indonesia', 'Teks Eksposisi')">
+                        <span class="font-medium">Bab 2:</span> Teks Eksposisi
+                    </div>
+                    <div class="chapter-item p-3 rounded-lg cursor-pointer" onclick="openChapter('Bahasa Indonesia', 'Puisi & Prosa')">
+                        <span class="font-medium">Bab 3:</span> Puisi & Prosa
+                    </div>
+                    <div class="chapter-item p-3 rounded-lg cursor-pointer" onclick="openChapter('Bahasa Indonesia', 'Kaidah Kebahasaan')">
+                        <span class="font-medium">Bab 4:</span> Kaidah Kebahasaan
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sejarah -->
+            <div class="subject-card bg-white rounded-xl shadow-lg p-6 category-social category-all">
+                <div class="flex items-center mb-4">
+                    <div class="w-12 h-12 bg-yellow-500 rounded-lg flex items-center justify-center text-white text-2xl mr-4">
+                        🏛️
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800">Sejarah</h3>
+                </div>
+                <p class="text-gray-600 mb-4">Mempelajari peristiwa masa lalu dan perkembangan peradaban</p>
+                <div class="space-y-2">
+                    <div class="chapter-item p-3 rounded-lg cursor-pointer" onclick="openChapter('Sejarah', 'Prasejarah Indonesia')">
+                        <span class="font-medium">Bab 1:</span> Prasejarah Indonesia
+                    </div>
+                    <div class="chapter-item p-3 rounded-lg cursor-pointer" onclick="openChapter('Sejarah', 'Kerajaan Nusantara')">
+                        <span class="font-medium">Bab 2:</span> Kerajaan Nusantara
+                    </div>
+                    <div class="chapter-item p-3 rounded-lg cursor-pointer" onclick="openChapter('Sejarah', 'Masa Kolonial')">
+                        <span class="font-medium">Bab 3:</span> Masa Kolonial
+                    </div>
+                    <div class="chapter-item p-3 rounded-lg cursor-pointer" onclick="openChapter('Sejarah', 'Kemerdekaan Indonesia')">
+                        <span class="font-medium">Bab 4:</span> Kemerdekaan Indonesia
+                    </div>
+                </div>
+            </div>
+
+            <!-- Geografi -->
+            <div class="subject-card bg-white rounded-xl shadow-lg p-6 category-social category-all">
+                <div class="flex items-center mb-4">
+                    <div class="w-12 h-12 bg-teal-500 rounded-lg flex items-center justify-center text-white text-2xl mr-4">
+                        🌍
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800">Geografi</h3>
+                </div>
+                <p class="text-gray-600 mb-4">Memahami bumi, lingkungan, dan interaksi manusia</p>
+                <div class="space-y-2">
+                    <div class="chapter-item p-3 rounded-lg cursor-pointer" onclick="openChapter('Geografi', 'Litosfer')">
+                        <span class="font-medium">Bab 1:</span> Litosfer
+                    </div>
+                    <div class="chapter-item p-3 rounded-lg cursor-pointer" onclick="openChapter('Geografi', 'Atmosfer')">
+                        <span class="font-medium">Bab 2:</span> Atmosfer
+                    </div>
+                    <div class="chapter-item p-3 rounded-lg cursor-pointer" onclick="openChapter('Geografi', 'Hidrosfer')">
+                        <span class="font-medium">Bab 3:</span> Hidrosfer
+                    </div>
+                    <div class="chapter-item p-3 rounded-lg cursor-pointer" onclick="openChapter('Geografi', 'Biosfer')">
+                        <span class="font-medium">Bab 4:</span> Biosfer
+                    </div>
+                </div>
+            </div>
+
+            <!-- Seni Budaya -->
+            <div class="subject-card bg-white rounded-xl shadow-lg p-6 category-arts category-all">
+                <div class="flex items-center mb-4">
+                    <div class="w-12 h-12 bg-pink-500 rounded-lg flex items-center justify-center text-white text-2xl mr-4">
+                        🎨
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800">Seni Budaya</h3>
+                </div>
+                <p class="text-gray-600 mb-4">Mengeksplorasi seni rupa, musik, dan budaya</p>
+                <div class="space-y-2">
+                    <div class="chapter-item p-3 rounded-lg cursor-pointer" onclick="openChapter('Seni Budaya', 'Seni Rupa')">
+                        <span class="font-medium">Bab 1:</span> Seni Rupa
+                    </div>
+                    <div class="chapter-item p-3 rounded-lg cursor-pointer" onclick="openChapter('Seni Budaya', 'Seni Musik')">
+                        <span class="font-medium">Bab 2:</span> Seni Musik
+                    </div>
+                    <div class="chapter-item p-3 rounded-lg cursor-pointer" onclick="openChapter('Seni Budaya', 'Seni Tari')">
+                        <span class="font-medium">Bab 3:</span> Seni Tari
+                    </div>
+                    <div class="chapter-item p-3 rounded-lg cursor-pointer" onclick="openChapter('Seni Budaya', 'Seni Teater')">
+                        <span class="font-medium">Bab 4:</span> Seni Teater
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pendidikan Jasmani -->
+            <div class="subject-card bg-white rounded-xl shadow-lg p-6 category-arts category-all">
+                <div class="flex items-center mb-4">
+                    <div class="w-12 h-12 bg-orange-500 rounded-lg flex items-center justify-center text-white text-2xl mr-4">
+                        ⚽
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800">Pendidikan Jasmani</h3>
+                </div>
+                <p class="text-gray-600 mb-4">Mengembangkan kebugaran dan keterampilan olahraga</p>
+                <div class="space-y-2">
+                    <div class="chapter-item p-3 rounded-lg cursor-pointer" onclick="openChapter('Pendidikan Jasmani', 'Atletik')">
+                        <span class="font-medium">Bab 1:</span> Atletik
+                    </div>
+                    <div class="chapter-item p-3 rounded-lg cursor-pointer" onclick="openChapter('Pendidikan Jasmani', 'Permainan Bola Besar')">
+                        <span class="font-medium">Bab 2:</span> Permainan Bola Besar
+                    </div>
+                    <div class="chapter-item p-3 rounded-lg cursor-pointer" onclick="openChapter('Pendidikan Jasmani', 'Permainan Bola Kecil')">
+                        <span class="font-medium">Bab 3:</span> Permainan Bola Kecil
+                    </div>
+                    <div class="chapter-item p-3 rounded-lg cursor-pointer" onclick="openChapter('Pendidikan Jasmani', 'Senam & Kebugaran')">
+                        <span class="font-medium">Bab 4:</span> Senam & Kebugaran
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal for Chapter Details -->
+    <div id="chapterModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+        <div class="bg-white rounded-xl p-8 max-w-2xl w-full mx-4 max-h-96 overflow-y-auto">
+            <div class="flex justify-between items-center mb-6">
+                <h2 id="modalTitle" class="text-2xl font-bold text-gray-800"></h2>
+                <button onclick="closeModal()" class="text-gray-500 hover:text-gray-700 text-2xl">×</button>
+            </div>
+            <div id="modalContent" class="text-gray-600">
+                <!-- Content will be populated by JavaScript -->
+            </div>
+            <div class="mt-6 flex justify-end">
+                <button onclick="closeModal()" class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded-lg transition-colors">
+                    Tutup
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Tab functionality
+        function showCategory(category) {
+            const cards = document.querySelectorAll('.subject-card');
+            const tabs = document.querySelectorAll('.tab-btn');
+            
+            // Remove active class from all tabs
+            tabs.forEach(tab => {
+                tab.classList.remove('active', 'bg-blue-500', 'text-white');
+                tab.classList.add('text-gray-600', 'hover:bg-gray-100');
+            });
+            
+            // Add active class to clicked tab
+            event.target.classList.add('active', 'bg-blue-500', 'text-white');
+            event.target.classList.remove('text-gray-600', 'hover:bg-gray-100');
+            
+            // Show/hide cards based on category
+            cards.forEach(card => {
+                if (category === 'all' || card.classList.contains(`category-${category}`)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // Chapter modal functionality
+        function openChapter(subject, chapter) {
+            const modal = document.getElementById('chapterModal');
+            const title = document.getElementById('modalTitle');
+            const content = document.getElementById('modalContent');
+            
+            title.textContent = `${subject} - ${chapter}`;
+            
+            // Sample content for each chapter
+            const chapterContent = {
+                'Aljabar': 'Mempelajari operasi matematika dengan variabel dan konstanta. Topik meliputi persamaan linear, kuadrat, dan sistem persamaan.',
+                'Geometri': 'Memahami bentuk, ukuran, dan sifat ruang. Mencakup bangun datar, bangun ruang, dan teorema geometri.',
+                'Mekanika': 'Studi tentang gerak benda dan gaya yang mempengaruhinya. Meliputi kinematika dan dinamika.',
+                'Struktur Atom': 'Memahami komponen penyusun atom: proton, neutron, dan elektron serta konfigurasi elektronnya.',
+                'Teks Narasi': 'Mempelajari struktur dan ciri-ciri teks yang menceritakan suatu peristiwa secara kronologis.',
+                'Prasejarah Indonesia': 'Mengenal kehidupan manusia purba di Indonesia dan peninggalan-peninggalannya.',
+                'Litosfer': 'Mempelajari lapisan batuan bumi, proses pembentukan batuan, dan fenomena geologi.',
+                'Seni Rupa': 'Mengeksplorasi unsur-unsur seni rupa seperti garis, warna, bentuk, dan komposisi.',
+                'Atletik': 'Mempelajari cabang olahraga lari, lompat, dan lempar serta teknik-tekniknya.'
+            };
+            
+            content.innerHTML = `
+                <p class="mb-4">${chapterContent[chapter] || 'Konten pembelajaran untuk bab ini sedang dalam pengembangan.'}</p>
+                <div class="bg-blue-50 p-4 rounded-lg">
+                    <h4 class="font-semibold text-blue-800 mb-2">Materi yang akan dipelajari:</h4>
+                    <ul class="list-disc list-inside text-blue-700 space-y-1">
+                        <li>Konsep dasar dan definisi</li>
+                        <li>Contoh dan aplikasi</li>
+                        <li>Latihan soal</li>
+                        <li>Evaluasi pemahaman</li>
+                    </ul>
+                </div>
+            `;
+            
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('chapterModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        // Initialize with all subjects shown
+        document.addEventListener('DOMContentLoaded', function() {
+            showCategory('all');
+        });
+
+        // Close modal when clicking outside
+        document.getElementById('chapterModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9729070410a5ce3a',t:'MTc1NTc2Nzc0Mi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
