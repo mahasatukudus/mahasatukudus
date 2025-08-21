@@ -3,526 +3,650 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portal Pembelajaran - Mata Pelajaran & Bab</title>
+    <title>Portal Pembelajaran Madrasah - MI, MTs, MA</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         .subject-card {
             transition: all 0.3s ease;
+            background: linear-gradient(135deg, #ffffff 0%, #f0fdf4 100%);
+            border: 1px solid #dcfce7;
         }
         .subject-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+            transform: translateY(-8px);
+            box-shadow: 0 25px 50px -12px rgba(34, 197, 94, 0.25);
+            border-color: #bbf7d0;
         }
         .chapter-item {
-            transition: all 0.2s ease;
+            transition: all 0.3s ease;
+            border-left: 4px solid transparent;
         }
         .chapter-item:hover {
-            background-color: #f3f4f6;
+            background: linear-gradient(90deg, #f0fdf4 0%, #dcfce7 100%);
+            border-left-color: #22c55e;
             padding-left: 1.5rem;
+        }
+        .jenjang-card {
+            background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
+            transition: all 0.3s ease;
+        }
+        .jenjang-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 20px 40px -12px rgba(34, 197, 94, 0.4);
+        }
+        .search-container {
+            background: linear-gradient(135deg, #059669 0%, #047857 100%);
+        }
+        .filter-btn {
+            transition: all 0.2s ease;
+        }
+        .filter-btn.active {
+            background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px -8px rgba(34, 197, 94, 0.5);
+        }
+        .grade-badge {
+            background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+        }
+        .islamic-pattern {
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.08'%3E%3Cpath d='M30 30c0-11.046-8.954-20-20-20s-20 8.954-20 20 8.954 20 20 20 20-8.954 20-20zm0 0c0 11.046 8.954 20 20 20s20-8.954 20-20-8.954-20-20-20-20 8.954-20 20z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+        .learn-btn {
+            background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+            transition: all 0.3s ease;
+        }
+        .learn-btn:hover {
+            background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
+            transform: translateY(-1px);
+            box-shadow: 0 8px 25px -8px rgba(34, 197, 94, 0.4);
         }
     </style>
 </head>
-<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
+<body class="bg-gradient-to-br from-green-50 via-white to-emerald-50 min-h-screen">
     <!-- Header -->
-    <header class="bg-white shadow-lg">
-        <div class="max-w-7xl mx-auto px-4 py-6">
-            <h1 class="text-4xl font-bold text-gray-800 text-center">
-                🎓 Portal Pembelajaran
+    <header class="bg-gradient-to-r from-green-600 via-emerald-600 to-teal-600 shadow-2xl islamic-pattern">
+        <div class="max-w-7xl mx-auto px-4 py-8">
+            <h1 class="text-5xl font-bold text-white text-center mb-2">
+                🕌 Portal Pembelajaran Madrasah
             </h1>
-            <p class="text-gray-600 text-center mt-2">Jelajahi berbagai mata pelajaran dan bab pembelajaran</p>
+            <p class="text-green-100 text-center text-lg">Sistem Pembelajaran Terpadu MI, MTs, dan MA</p>
         </div>
     </header>
 
+    <!-- Search and Filter Section -->
+    <div class="search-container py-8 mb-8">
+        <div class="max-w-6xl mx-auto px-4">
+            <!-- Search Bar -->
+            <div class="mb-6">
+                <div class="relative max-w-2xl mx-auto">
+                    <input type="text" id="searchInput" placeholder="🔍 Cari mata pelajaran, bab, atau jenjang..." 
+                           class="w-full px-6 py-4 text-lg rounded-2xl border-0 shadow-lg focus:ring-4 focus:ring-white/30 focus:outline-none"
+                           oninput="performSearch()">
+                    <button onclick="clearSearch()" class="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600">
+                        ✕
+                    </button>
+                </div>
+            </div>
+
+            <!-- Filter Buttons -->
+            <div class="flex flex-wrap justify-center gap-3">
+                <button onclick="filterByJenjang('all')" class="filter-btn active px-6 py-3 bg-white/20 text-white rounded-xl font-medium hover:bg-white/30">
+                    Semua Jenjang
+                </button>
+                <button onclick="filterByJenjang('MI')" class="filter-btn px-6 py-3 bg-white/20 text-white rounded-xl font-medium hover:bg-white/30">
+                    MI (Kelas 1-6)
+                </button>
+                <button onclick="filterByJenjang('MTs')" class="filter-btn px-6 py-3 bg-white/20 text-white rounded-xl font-medium hover:bg-white/30">
+                    MTs (Kelas 7-9)
+                </button>
+                <button onclick="filterByJenjang('MA')" class="filter-btn px-6 py-3 bg-white/20 text-white rounded-xl font-medium hover:bg-white/30">
+                    MA (Kelas 10-12)
+                </button>
+            </div>
+        </div>
+    </div>
+
     <!-- Main Content -->
-    <main class="max-w-7xl mx-auto px-4 py-8">
-        <!-- Navigation Tabs -->
-        <div class="flex flex-wrap justify-center mb-8 bg-white rounded-lg shadow-md p-2">
-            <button onclick="showCategory('all')" class="tab-btn active px-6 py-3 rounded-lg font-medium transition-all duration-200 mx-1 mb-2">
-                Semua Mata Pelajaran
-            </button>
-            <button onclick="showCategory('science')" class="tab-btn px-6 py-3 rounded-lg font-medium transition-all duration-200 mx-1 mb-2">
-                Sains & Matematika
-            </button>
-            <button onclick="showCategory('social')" class="tab-btn px-6 py-3 rounded-lg font-medium transition-all duration-200 mx-1 mb-2">
-                Sosial & Bahasa
-            </button>
-            <button onclick="showCategory('arts')" class="tab-btn px-6 py-3 rounded-lg font-medium transition-all duration-200 mx-1 mb-2">
-                Seni & Olahraga
-            </button>
+    <main class="max-w-7xl mx-auto px-4 pb-12">
+        <!-- Jenjang Overview Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+            <div class="jenjang-card text-white p-8 rounded-2xl shadow-xl">
+                <div class="text-center">
+                    <div class="text-4xl mb-4">🏫</div>
+                    <h3 class="text-2xl font-bold mb-2">MI</h3>
+                    <p class="text-green-100">Madrasah Ibtidaiyah</p>
+                    <p class="text-sm text-green-200 mt-2">Kelas 1-6 • Usia 6-12 tahun</p>
+                </div>
+            </div>
+            <div class="jenjang-card text-white p-8 rounded-2xl shadow-xl">
+                <div class="text-center">
+                    <div class="text-4xl mb-4">🎓</div>
+                    <h3 class="text-2xl font-bold mb-2">MTs</h3>
+                    <p class="text-green-100">Madrasah Tsanawiyah</p>
+                    <p class="text-sm text-green-200 mt-2">Kelas 7-9 • Usia 12-15 tahun</p>
+                </div>
+            </div>
+            <div class="jenjang-card text-white p-8 rounded-2xl shadow-xl">
+                <div class="text-center">
+                    <div class="text-4xl mb-4">🎯</div>
+                    <h3 class="text-2xl font-bold mb-2">MA</h3>
+                    <p class="text-green-100">Madrasah Aliyah</p>
+                    <p class="text-sm text-green-200 mt-2">Kelas 10-12 • Usia 15-18 tahun</p>
+                </div>
+            </div>
         </div>
 
         <!-- Subjects Grid -->
-        <div id="subjects-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <!-- Matematika -->
-            <div class="subject-card bg-white rounded-xl shadow-lg p-6 category-science category-all">
-                <div class="flex items-center mb-4">
-                    <div class="w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center text-white text-2xl mr-4">
-                        📊
+        <div id="subjects-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            
+            <!-- MI - Al-Quran Hadis -->
+            <div class="subject-card rounded-2xl shadow-xl p-6 jenjang-MI kategori-pai" data-jenjang="MI" data-kategori="pai">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="flex items-center">
+                        <div class="w-14 h-14 bg-gradient-to-br from-green-500 to-emerald-600 rounded-xl flex items-center justify-center text-white text-2xl mr-4">
+                            📖
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-800">Al-Quran Hadis</h3>
+                            <div class="grade-badge text-white px-3 py-1 rounded-full text-sm font-medium mt-1">MI</div>
+                        </div>
                     </div>
-                    <h3 class="text-xl font-bold text-gray-800">Matematika</h3>
                 </div>
-                <p class="text-gray-600 mb-4">Pelajari konsep matematika dari dasar hingga lanjutan</p>
-                <div class="space-y-2">
+                <p class="text-gray-600 mb-4">Mempelajari Al-Quran dan Hadis sebagai pedoman hidup</p>
+                <div class="space-y-3">
                     <div class="chapter-item p-3 rounded-lg border border-gray-200">
                         <div class="flex justify-between items-center">
-                            <span class="cursor-pointer flex-1" onclick="openChapter('Matematika', 'Aljabar')">
-                                <span class="font-medium">Bab 1:</span> Aljabar
+                            <span class="cursor-pointer flex-1" onclick="openChapter('Al-Quran Hadis', 'Mengenal Huruf Hijaiyah')">
+                                <span class="font-medium">Bab 1:</span> Mengenal Huruf Hijaiyah
                             </span>
-                            <a href="quiz/matematika/aljabar.html" class="ml-3 bg-blue-100 hover:bg-blue-200 text-blue-700 px-3 py-1 rounded-md text-sm font-medium transition-colors">
-                                📝 Quiz
+                            <a href="mi/al-quran-hadis/mengenal-huruf-hijaiyah.html" class="ml-3 learn-btn text-white px-4 py-2 rounded-lg text-sm font-medium">
+                                📚 Pelajari
                             </a>
                         </div>
                     </div>
                     <div class="chapter-item p-3 rounded-lg border border-gray-200">
                         <div class="flex justify-between items-center">
-                            <span class="cursor-pointer flex-1" onclick="openChapter('Matematika', 'Geometri')">
-                                <span class="font-medium">Bab 2:</span> Geometri
+                            <span class="cursor-pointer flex-1" onclick="openChapter('Al-Quran Hadis', 'Surat-surat Pendek')">
+                                <span class="font-medium">Bab 2:</span> Surat-surat Pendek
                             </span>
-                            <a href="quiz/matematika/geometri.html" class="ml-3 bg-blue-100 hover:bg-blue-200 text-blue-700 px-3 py-1 rounded-md text-sm font-medium transition-colors">
-                                📝 Quiz
+                            <a href="mi/al-quran-hadis/surat-surat-pendek.html" class="ml-3 learn-btn text-white px-4 py-2 rounded-lg text-sm font-medium">
+                                📚 Pelajari
                             </a>
                         </div>
                     </div>
                     <div class="chapter-item p-3 rounded-lg border border-gray-200">
                         <div class="flex justify-between items-center">
-                            <span class="cursor-pointer flex-1" onclick="openChapter('Matematika', 'Statistika')">
-                                <span class="font-medium">Bab 3:</span> Statistika
+                            <span class="cursor-pointer flex-1">
+                                <span class="font-medium">Bab 3:</span> Hadis tentang Kebersihan
                             </span>
-                            <a href="quiz/matematika/statistika.html" class="ml-3 bg-blue-100 hover:bg-blue-200 text-blue-700 px-3 py-1 rounded-md text-sm font-medium transition-colors">
-                                📝 Quiz
-                            </a>
-                        </div>
-                    </div>
-                    <div class="chapter-item p-3 rounded-lg border border-gray-200">
-                        <div class="flex justify-between items-center">
-                            <span class="cursor-pointer flex-1" onclick="openChapter('Matematika', 'Kalkulus')">
-                                <span class="font-medium">Bab 4:</span> Kalkulus
-                            </span>
-                            <a href="quiz/matematika/kalkulus.html" class="ml-3 bg-blue-100 hover:bg-blue-200 text-blue-700 px-3 py-1 rounded-md text-sm font-medium transition-colors">
-                                📝 Quiz
+                            <a href="mi/al-quran-hadis/hadis-tentang-kebersihan.html" class="ml-3 learn-btn text-white px-4 py-2 rounded-lg text-sm font-medium">
+                                📚 Pelajari
                             </a>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Fisika -->
-            <div class="subject-card bg-white rounded-xl shadow-lg p-6 category-science category-all">
-                <div class="flex items-center mb-4">
-                    <div class="w-12 h-12 bg-purple-500 rounded-lg flex items-center justify-center text-white text-2xl mr-4">
-                        ⚛️
+            <!-- MI - Akidah Akhlak -->
+            <div class="subject-card rounded-2xl shadow-xl p-6 jenjang-MI kategori-pai" data-jenjang="MI" data-kategori="pai">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="flex items-center">
+                        <div class="w-14 h-14 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl flex items-center justify-center text-white text-2xl mr-4">
+                            ✨
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-800">Akidah Akhlak</h3>
+                            <div class="grade-badge text-white px-3 py-1 rounded-full text-sm font-medium mt-1">MI</div>
+                        </div>
                     </div>
-                    <h3 class="text-xl font-bold text-gray-800">Fisika</h3>
                 </div>
-                <p class="text-gray-600 mb-4">Memahami hukum-hukum alam dan fenomena fisika</p>
-                <div class="space-y-2">
+                <p class="text-gray-600 mb-4">Membangun keimanan dan akhlak mulia</p>
+                <div class="space-y-3">
                     <div class="chapter-item p-3 rounded-lg border border-gray-200">
                         <div class="flex justify-between items-center">
-                            <span class="cursor-pointer flex-1" onclick="openChapter('Fisika', 'Mekanika')">
-                                <span class="font-medium">Bab 1:</span> Mekanika
+                            <span class="cursor-pointer flex-1" onclick="openChapter('Akidah Akhlak', 'Rukun Iman')">
+                                <span class="font-medium">Bab 1:</span> Rukun Iman
                             </span>
-                            <a href="quiz/fisika/mekanika.html" class="ml-3 bg-purple-100 hover:bg-purple-200 text-purple-700 px-3 py-1 rounded-md text-sm font-medium transition-colors">
-                                📝 Quiz
+                            <a href="mi/akidah-akhlak/rukun-iman.html" class="ml-3 learn-btn text-white px-4 py-2 rounded-lg text-sm font-medium">
+                                📚 Pelajari
                             </a>
                         </div>
                     </div>
                     <div class="chapter-item p-3 rounded-lg border border-gray-200">
                         <div class="flex justify-between items-center">
-                            <span class="cursor-pointer flex-1" onclick="openChapter('Fisika', 'Termodinamika')">
-                                <span class="font-medium">Bab 2:</span> Termodinamika
+                            <span class="cursor-pointer flex-1">
+                                <span class="font-medium">Bab 2:</span> Akhlak Terpuji
                             </span>
-                            <a href="quiz/fisika/termodinamika.html" class="ml-3 bg-purple-100 hover:bg-purple-200 text-purple-700 px-3 py-1 rounded-md text-sm font-medium transition-colors">
-                                📝 Quiz
+                            <a href="mi/akidah-akhlak/akhlak-terpuji.html" class="ml-3 learn-btn text-white px-4 py-2 rounded-lg text-sm font-medium">
+                                📚 Pelajari
                             </a>
                         </div>
                     </div>
                     <div class="chapter-item p-3 rounded-lg border border-gray-200">
                         <div class="flex justify-between items-center">
-                            <span class="cursor-pointer flex-1" onclick="openChapter('Fisika', 'Gelombang & Optik')">
-                                <span class="font-medium">Bab 3:</span> Gelombang & Optik
+                            <span class="cursor-pointer flex-1">
+                                <span class="font-medium">Bab 3:</span> Asmaul Husna
                             </span>
-                            <a href="quiz/fisika/gelombang-optik.html" class="ml-3 bg-purple-100 hover:bg-purple-200 text-purple-700 px-3 py-1 rounded-md text-sm font-medium transition-colors">
-                                📝 Quiz
-                            </a>
-                        </div>
-                    </div>
-                    <div class="chapter-item p-3 rounded-lg border border-gray-200">
-                        <div class="flex justify-between items-center">
-                            <span class="cursor-pointer flex-1" onclick="openChapter('Fisika', 'Listrik & Magnet')">
-                                <span class="font-medium">Bab 4:</span> Listrik & Magnet
-                            </span>
-                            <a href="quiz/fisika/listrik-magnet.html" class="ml-3 bg-purple-100 hover:bg-purple-200 text-purple-700 px-3 py-1 rounded-md text-sm font-medium transition-colors">
-                                📝 Quiz
+                            <a href="mi/akidah-akhlak/asmaul-husna.html" class="ml-3 learn-btn text-white px-4 py-2 rounded-lg text-sm font-medium">
+                                📚 Pelajari
                             </a>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Kimia -->
-            <div class="subject-card bg-white rounded-xl shadow-lg p-6 category-science category-all">
-                <div class="flex items-center mb-4">
-                    <div class="w-12 h-12 bg-green-500 rounded-lg flex items-center justify-center text-white text-2xl mr-4">
-                        🧪
+            <!-- MI - Fikih -->
+            <div class="subject-card rounded-2xl shadow-xl p-6 jenjang-MI kategori-pai" data-jenjang="MI" data-kategori="pai">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="flex items-center">
+                        <div class="w-14 h-14 bg-gradient-to-br from-purple-500 to-violet-600 rounded-xl flex items-center justify-center text-white text-2xl mr-4">
+                            🕌
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-800">Fikih</h3>
+                            <div class="grade-badge text-white px-3 py-1 rounded-full text-sm font-medium mt-1">MI</div>
+                        </div>
                     </div>
-                    <h3 class="text-xl font-bold text-gray-800">Kimia</h3>
                 </div>
-                <p class="text-gray-600 mb-4">Eksplorasi struktur materi dan reaksi kimia</p>
-                <div class="space-y-2">
+                <p class="text-gray-600 mb-4">Mempelajari tata cara ibadah dalam Islam</p>
+                <div class="space-y-3">
                     <div class="chapter-item p-3 rounded-lg border border-gray-200">
                         <div class="flex justify-between items-center">
-                            <span class="cursor-pointer flex-1" onclick="openChapter('Kimia', 'Struktur Atom')">
-                                <span class="font-medium">Bab 1:</span> Struktur Atom
+                            <span class="cursor-pointer flex-1" onclick="openChapter('Fikih', 'Thaharah (Bersuci)')">
+                                <span class="font-medium">Bab 1:</span> Thaharah (Bersuci)
                             </span>
-                            <a href="quiz/kimia/struktur-atom.html" class="ml-3 bg-green-100 hover:bg-green-200 text-green-700 px-3 py-1 rounded-md text-sm font-medium transition-colors">
-                                📝 Quiz
+                            <a href="mi/fikih/thaharah-bersuci.html" class="ml-3 learn-btn text-white px-4 py-2 rounded-lg text-sm font-medium">
+                                📚 Pelajari
                             </a>
                         </div>
                     </div>
                     <div class="chapter-item p-3 rounded-lg border border-gray-200">
                         <div class="flex justify-between items-center">
-                            <span class="cursor-pointer flex-1" onclick="openChapter('Kimia', 'Ikatan Kimia')">
-                                <span class="font-medium">Bab 2:</span> Ikatan Kimia
+                            <span class="cursor-pointer flex-1">
+                                <span class="font-medium">Bab 2:</span> Shalat
                             </span>
-                            <a href="quiz/kimia/ikatan-kimia.html" class="ml-3 bg-green-100 hover:bg-green-200 text-green-700 px-3 py-1 rounded-md text-sm font-medium transition-colors">
-                                📝 Quiz
+                            <a href="mi/fikih/shalat.html" class="ml-3 learn-btn text-white px-4 py-2 rounded-lg text-sm font-medium">
+                                📚 Pelajari
                             </a>
                         </div>
                     </div>
                     <div class="chapter-item p-3 rounded-lg border border-gray-200">
                         <div class="flex justify-between items-center">
-                            <span class="cursor-pointer flex-1" onclick="openChapter('Kimia', 'Reaksi Kimia')">
-                                <span class="font-medium">Bab 3:</span> Reaksi Kimia
+                            <span class="cursor-pointer flex-1">
+                                <span class="font-medium">Bab 3:</span> Puasa
                             </span>
-                            <a href="quiz/kimia/reaksi-kimia.html" class="ml-3 bg-green-100 hover:bg-green-200 text-green-700 px-3 py-1 rounded-md text-sm font-medium transition-colors">
-                                📝 Quiz
-                            </a>
-                        </div>
-                    </div>
-                    <div class="chapter-item p-3 rounded-lg border border-gray-200">
-                        <div class="flex justify-between items-center">
-                            <span class="cursor-pointer flex-1" onclick="openChapter('Kimia', 'Kimia Organik')">
-                                <span class="font-medium">Bab 4:</span> Kimia Organik
-                            </span>
-                            <a href="quiz/kimia/kimia-organik.html" class="ml-3 bg-green-100 hover:bg-green-200 text-green-700 px-3 py-1 rounded-md text-sm font-medium transition-colors">
-                                📝 Quiz
+                            <a href="mi/fikih/puasa.html" class="ml-3 learn-btn text-white px-4 py-2 rounded-lg text-sm font-medium">
+                                📚 Pelajari
                             </a>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Bahasa Indonesia -->
-            <div class="subject-card bg-white rounded-xl shadow-lg p-6 category-social category-all">
-                <div class="flex items-center mb-4">
-                    <div class="w-12 h-12 bg-red-500 rounded-lg flex items-center justify-center text-white text-2xl mr-4">
-                        📚
+            <!-- MI - Matematika -->
+            <div class="subject-card rounded-2xl shadow-xl p-6 jenjang-MI kategori-umum" data-jenjang="MI" data-kategori="umum">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="flex items-center">
+                        <div class="w-14 h-14 bg-gradient-to-br from-orange-500 to-red-600 rounded-xl flex items-center justify-center text-white text-2xl mr-4">
+                            🔢
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-800">Matematika</h3>
+                            <div class="grade-badge text-white px-3 py-1 rounded-full text-sm font-medium mt-1">MI</div>
+                        </div>
                     </div>
-                    <h3 class="text-xl font-bold text-gray-800">Bahasa Indonesia</h3>
                 </div>
-                <p class="text-gray-600 mb-4">Menguasai bahasa dan sastra Indonesia</p>
-                <div class="space-y-2">
+                <p class="text-gray-600 mb-4">Dasar-dasar matematika untuk tingkat dasar</p>
+                <div class="space-y-3">
                     <div class="chapter-item p-3 rounded-lg border border-gray-200">
                         <div class="flex justify-between items-center">
-                            <span class="cursor-pointer flex-1" onclick="openChapter('Bahasa Indonesia', 'Teks Narasi')">
-                                <span class="font-medium">Bab 1:</span> Teks Narasi
+                            <span class="cursor-pointer flex-1" onclick="openChapter('Matematika', 'Bilangan dan Operasi Hitung')">
+                                <span class="font-medium">Bab 1:</span> Bilangan dan Operasi Hitung
                             </span>
-                            <a href="quiz/bahasa-indonesia/teks-narasi.html" class="ml-3 bg-red-100 hover:bg-red-200 text-red-700 px-3 py-1 rounded-md text-sm font-medium transition-colors">
-                                📝 Quiz
+                            <a href="mi/matematika/bilangan-dan-operasi-hitung.html" class="ml-3 learn-btn text-white px-4 py-2 rounded-lg text-sm font-medium">
+                                📚 Pelajari
                             </a>
                         </div>
                     </div>
                     <div class="chapter-item p-3 rounded-lg border border-gray-200">
                         <div class="flex justify-between items-center">
-                            <span class="cursor-pointer flex-1" onclick="openChapter('Bahasa Indonesia', 'Teks Eksposisi')">
-                                <span class="font-medium">Bab 2:</span> Teks Eksposisi
+                            <span class="cursor-pointer flex-1">
+                                <span class="font-medium">Bab 2:</span> Geometri Dasar
                             </span>
-                            <a href="quiz/bahasa-indonesia/teks-eksposisi.html" class="ml-3 bg-red-100 hover:bg-red-200 text-red-700 px-3 py-1 rounded-md text-sm font-medium transition-colors">
-                                📝 Quiz
+                            <a href="mi/matematika/geometri-dasar.html" class="ml-3 learn-btn text-white px-4 py-2 rounded-lg text-sm font-medium">
+                                📚 Pelajari
                             </a>
                         </div>
                     </div>
                     <div class="chapter-item p-3 rounded-lg border border-gray-200">
                         <div class="flex justify-between items-center">
-                            <span class="cursor-pointer flex-1" onclick="openChapter('Bahasa Indonesia', 'Puisi & Prosa')">
-                                <span class="font-medium">Bab 3:</span> Puisi & Prosa
+                            <span class="cursor-pointer flex-1">
+                                <span class="font-medium">Bab 3:</span> Pengukuran
                             </span>
-                            <a href="quiz/bahasa-indonesia/puisi-prosa.html" class="ml-3 bg-red-100 hover:bg-red-200 text-red-700 px-3 py-1 rounded-md text-sm font-medium transition-colors">
-                                📝 Quiz
-                            </a>
-                        </div>
-                    </div>
-                    <div class="chapter-item p-3 rounded-lg border border-gray-200">
-                        <div class="flex justify-between items-center">
-                            <span class="cursor-pointer flex-1" onclick="openChapter('Bahasa Indonesia', 'Kaidah Kebahasaan')">
-                                <span class="font-medium">Bab 4:</span> Kaidah Kebahasaan
-                            </span>
-                            <a href="quiz/bahasa-indonesia/kaidah-kebahasaan.html" class="ml-3 bg-red-100 hover:bg-red-200 text-red-700 px-3 py-1 rounded-md text-sm font-medium transition-colors">
-                                📝 Quiz
+                            <a href="mi/matematika/pengukuran.html" class="ml-3 learn-btn text-white px-4 py-2 rounded-lg text-sm font-medium">
+                                📚 Pelajari
                             </a>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Sejarah -->
-            <div class="subject-card bg-white rounded-xl shadow-lg p-6 category-social category-all">
-                <div class="flex items-center mb-4">
-                    <div class="w-12 h-12 bg-yellow-500 rounded-lg flex items-center justify-center text-white text-2xl mr-4">
-                        🏛️
+            <!-- MTs - Al-Quran Hadis -->
+            <div class="subject-card rounded-2xl shadow-xl p-6 jenjang-MTs kategori-pai" data-jenjang="MTs" data-kategori="pai">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="flex items-center">
+                        <div class="w-14 h-14 bg-gradient-to-br from-green-600 to-emerald-700 rounded-xl flex items-center justify-center text-white text-2xl mr-4">
+                            📖
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-800">Al-Quran Hadis</h3>
+                            <div class="grade-badge text-white px-3 py-1 rounded-full text-sm font-medium mt-1">MTs</div>
+                        </div>
                     </div>
-                    <h3 class="text-xl font-bold text-gray-800">Sejarah</h3>
                 </div>
-                <p class="text-gray-600 mb-4">Mempelajari peristiwa masa lalu dan perkembangan peradaban</p>
-                <div class="space-y-2">
+                <p class="text-gray-600 mb-4">Pemahaman mendalam Al-Quran dan Hadis</p>
+                <div class="space-y-3">
                     <div class="chapter-item p-3 rounded-lg border border-gray-200">
                         <div class="flex justify-between items-center">
-                            <span class="cursor-pointer flex-1" onclick="openChapter('Sejarah', 'Prasejarah Indonesia')">
-                                <span class="font-medium">Bab 1:</span> Prasejarah Indonesia
+                            <span class="cursor-pointer flex-1" onclick="openChapter('Al-Quran Hadis', 'Tajwid dan Qiraah')">
+                                <span class="font-medium">Bab 1:</span> Tajwid dan Qiraah
                             </span>
-                            <a href="quiz/sejarah/prasejarah-indonesia.html" class="ml-3 bg-yellow-100 hover:bg-yellow-200 text-yellow-700 px-3 py-1 rounded-md text-sm font-medium transition-colors">
-                                📝 Quiz
+                            <a href="mts/al-quran-hadis/tajwid-dan-qiraah.html" class="ml-3 learn-btn text-white px-4 py-2 rounded-lg text-sm font-medium">
+                                📚 Pelajari
                             </a>
                         </div>
                     </div>
                     <div class="chapter-item p-3 rounded-lg border border-gray-200">
                         <div class="flex justify-between items-center">
-                            <span class="cursor-pointer flex-1" onclick="openChapter('Sejarah', 'Kerajaan Nusantara')">
-                                <span class="font-medium">Bab 2:</span> Kerajaan Nusantara
+                            <span class="cursor-pointer flex-1">
+                                <span class="font-medium">Bab 2:</span> Tafsir Ayat Pilihan
                             </span>
-                            <a href="quiz/sejarah/kerajaan-nusantara.html" class="ml-3 bg-yellow-100 hover:bg-yellow-200 text-yellow-700 px-3 py-1 rounded-md text-sm font-medium transition-colors">
-                                📝 Quiz
+                            <a href="mts/al-quran-hadis/tafsir-ayat-pilihan.html" class="ml-3 learn-btn text-white px-4 py-2 rounded-lg text-sm font-medium">
+                                📚 Pelajari
                             </a>
                         </div>
                     </div>
                     <div class="chapter-item p-3 rounded-lg border border-gray-200">
                         <div class="flex justify-between items-center">
-                            <span class="cursor-pointer flex-1" onclick="openChapter('Sejarah', 'Masa Kolonial')">
-                                <span class="font-medium">Bab 3:</span> Masa Kolonial
+                            <span class="cursor-pointer flex-1">
+                                <span class="font-medium">Bab 3:</span> Hadis Akhlak
                             </span>
-                            <a href="quiz/sejarah/masa-kolonial.html" class="ml-3 bg-yellow-100 hover:bg-yellow-200 text-yellow-700 px-3 py-1 rounded-md text-sm font-medium transition-colors">
-                                📝 Quiz
-                            </a>
-                        </div>
-                    </div>
-                    <div class="chapter-item p-3 rounded-lg border border-gray-200">
-                        <div class="flex justify-between items-center">
-                            <span class="cursor-pointer flex-1" onclick="openChapter('Sejarah', 'Kemerdekaan Indonesia')">
-                                <span class="font-medium">Bab 4:</span> Kemerdekaan Indonesia
-                            </span>
-                            <a href="quiz/sejarah/kemerdekaan-indonesia.html" class="ml-3 bg-yellow-100 hover:bg-yellow-200 text-yellow-700 px-3 py-1 rounded-md text-sm font-medium transition-colors">
-                                📝 Quiz
+                            <a href="mts/al-quran-hadis/hadis-akhlak.html" class="ml-3 learn-btn text-white px-4 py-2 rounded-lg text-sm font-medium">
+                                📚 Pelajari
                             </a>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Geografi -->
-            <div class="subject-card bg-white rounded-xl shadow-lg p-6 category-social category-all">
-                <div class="flex items-center mb-4">
-                    <div class="w-12 h-12 bg-teal-500 rounded-lg flex items-center justify-center text-white text-2xl mr-4">
-                        🌍
+            <!-- MTs - IPA -->
+            <div class="subject-card rounded-2xl shadow-xl p-6 jenjang-MTs kategori-umum" data-jenjang="MTs" data-kategori="umum">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="flex items-center">
+                        <div class="w-14 h-14 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-xl flex items-center justify-center text-white text-2xl mr-4">
+                            🔬
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-800">IPA</h3>
+                            <div class="grade-badge text-white px-3 py-1 rounded-full text-sm font-medium mt-1">MTs</div>
+                        </div>
                     </div>
-                    <h3 class="text-xl font-bold text-gray-800">Geografi</h3>
                 </div>
-                <p class="text-gray-600 mb-4">Memahami bumi, lingkungan, dan interaksi manusia</p>
-                <div class="space-y-2">
+                <p class="text-gray-600 mb-4">Ilmu Pengetahuan Alam terpadu</p>
+                <div class="space-y-3">
                     <div class="chapter-item p-3 rounded-lg border border-gray-200">
                         <div class="flex justify-between items-center">
-                            <span class="cursor-pointer flex-1" onclick="openChapter('Geografi', 'Litosfer')">
-                                <span class="font-medium">Bab 1:</span> Litosfer
+                            <span class="cursor-pointer flex-1" onclick="openChapter('IPA', 'Makhluk Hidup dan Lingkungan')">
+                                <span class="font-medium">Bab 1:</span> Makhluk Hidup dan Lingkungan
                             </span>
-                            <a href="quiz/geografi/litosfer.html" class="ml-3 bg-teal-100 hover:bg-teal-200 text-teal-700 px-3 py-1 rounded-md text-sm font-medium transition-colors">
-                                📝 Quiz
+                            <a href="mts/ipa/makhluk-hidup-dan-lingkungan.html" class="ml-3 learn-btn text-white px-4 py-2 rounded-lg text-sm font-medium">
+                                📚 Pelajari
                             </a>
                         </div>
                     </div>
                     <div class="chapter-item p-3 rounded-lg border border-gray-200">
                         <div class="flex justify-between items-center">
-                            <span class="cursor-pointer flex-1" onclick="openChapter('Geografi', 'Atmosfer')">
-                                <span class="font-medium">Bab 2:</span> Atmosfer
+                            <span class="cursor-pointer flex-1">
+                                <span class="font-medium">Bab 2:</span> Zat dan Perubahannya
                             </span>
-                            <a href="quiz/geografi/atmosfer.html" class="ml-3 bg-teal-100 hover:bg-teal-200 text-teal-700 px-3 py-1 rounded-md text-sm font-medium transition-colors">
-                                📝 Quiz
+                            <a href="mts/ipa/zat-dan-perubahannya.html" class="ml-3 learn-btn text-white px-4 py-2 rounded-lg text-sm font-medium">
+                                📚 Pelajari
                             </a>
                         </div>
                     </div>
                     <div class="chapter-item p-3 rounded-lg border border-gray-200">
                         <div class="flex justify-between items-center">
-                            <span class="cursor-pointer flex-1" onclick="openChapter('Geografi', 'Hidrosfer')">
-                                <span class="font-medium">Bab 3:</span> Hidrosfer
+                            <span class="cursor-pointer flex-1">
+                                <span class="font-medium">Bab 3:</span> Energi dan Perubahannya
                             </span>
-                            <a href="quiz/geografi/hidrosfer.html" class="ml-3 bg-teal-100 hover:bg-teal-200 text-teal-700 px-3 py-1 rounded-md text-sm font-medium transition-colors">
-                                📝 Quiz
-                            </a>
-                        </div>
-                    </div>
-                    <div class="chapter-item p-3 rounded-lg border border-gray-200">
-                        <div class="flex justify-between items-center">
-                            <span class="cursor-pointer flex-1" onclick="openChapter('Geografi', 'Biosfer')">
-                                <span class="font-medium">Bab 4:</span> Biosfer
-                            </span>
-                            <a href="quiz/geografi/biosfer.html" class="ml-3 bg-teal-100 hover:bg-teal-200 text-teal-700 px-3 py-1 rounded-md text-sm font-medium transition-colors">
-                                📝 Quiz
+                            <a href="mts/ipa/energi-dan-perubahannya.html" class="ml-3 learn-btn text-white px-4 py-2 rounded-lg text-sm font-medium">
+                                📚 Pelajari
                             </a>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Seni Budaya -->
-            <div class="subject-card bg-white rounded-xl shadow-lg p-6 category-arts category-all">
-                <div class="flex items-center mb-4">
-                    <div class="w-12 h-12 bg-pink-500 rounded-lg flex items-center justify-center text-white text-2xl mr-4">
-                        🎨
+            <!-- MA - Fikih -->
+            <div class="subject-card rounded-2xl shadow-xl p-6 jenjang-MA kategori-pai" data-jenjang="MA" data-kategori="pai">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="flex items-center">
+                        <div class="w-14 h-14 bg-gradient-to-br from-purple-600 to-violet-700 rounded-xl flex items-center justify-center text-white text-2xl mr-4">
+                            🕌
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-800">Fikih</h3>
+                            <div class="grade-badge text-white px-3 py-1 rounded-full text-sm font-medium mt-1">MA</div>
+                        </div>
                     </div>
-                    <h3 class="text-xl font-bold text-gray-800">Seni Budaya</h3>
                 </div>
-                <p class="text-gray-600 mb-4">Mengeksplorasi seni rupa, musik, dan budaya</p>
-                <div class="space-y-2">
+                <p class="text-gray-600 mb-4">Fikih lanjutan dan hukum Islam kontemporer</p>
+                <div class="space-y-3">
                     <div class="chapter-item p-3 rounded-lg border border-gray-200">
                         <div class="flex justify-between items-center">
-                            <span class="cursor-pointer flex-1" onclick="openChapter('Seni Budaya', 'Seni Rupa')">
-                                <span class="font-medium">Bab 1:</span> Seni Rupa
+                            <span class="cursor-pointer flex-1" onclick="openChapter('Fikih', 'Fikih Muamalah')">
+                                <span class="font-medium">Bab 1:</span> Fikih Muamalah
                             </span>
-                            <a href="quiz/seni-budaya/seni-rupa.html" class="ml-3 bg-pink-100 hover:bg-pink-200 text-pink-700 px-3 py-1 rounded-md text-sm font-medium transition-colors">
-                                📝 Quiz
+                            <a href="ma/fikih/fikih-muamalah.html" class="ml-3 learn-btn text-white px-4 py-2 rounded-lg text-sm font-medium">
+                                📚 Pelajari
                             </a>
                         </div>
                     </div>
                     <div class="chapter-item p-3 rounded-lg border border-gray-200">
                         <div class="flex justify-between items-center">
-                            <span class="cursor-pointer flex-1" onclick="openChapter('Seni Budaya', 'Seni Musik')">
-                                <span class="font-medium">Bab 2:</span> Seni Musik
+                            <span class="cursor-pointer flex-1">
+                                <span class="font-medium">Bab 2:</span> Fikih Jinayat
                             </span>
-                            <a href="quiz/seni-budaya/seni-musik.html" class="ml-3 bg-pink-100 hover:bg-pink-200 text-pink-700 px-3 py-1 rounded-md text-sm font-medium transition-colors">
-                                📝 Quiz
+                            <a href="ma/fikih/fikih-jinayat.html" class="ml-3 learn-btn text-white px-4 py-2 rounded-lg text-sm font-medium">
+                                📚 Pelajari
                             </a>
                         </div>
                     </div>
                     <div class="chapter-item p-3 rounded-lg border border-gray-200">
                         <div class="flex justify-between items-center">
-                            <span class="cursor-pointer flex-1" onclick="openChapter('Seni Budaya', 'Seni Tari')">
-                                <span class="font-medium">Bab 3:</span> Seni Tari
+                            <span class="cursor-pointer flex-1">
+                                <span class="font-medium">Bab 3:</span> Fikih Siyasah
                             </span>
-                            <a href="quiz/seni-budaya/seni-tari.html" class="ml-3 bg-pink-100 hover:bg-pink-200 text-pink-700 px-3 py-1 rounded-md text-sm font-medium transition-colors">
-                                📝 Quiz
-                            </a>
-                        </div>
-                    </div>
-                    <div class="chapter-item p-3 rounded-lg border border-gray-200">
-                        <div class="flex justify-between items-center">
-                            <span class="cursor-pointer flex-1" onclick="openChapter('Seni Budaya', 'Seni Teater')">
-                                <span class="font-medium">Bab 4:</span> Seni Teater
-                            </span>
-                            <a href="quiz/seni-budaya/seni-teater.html" class="ml-3 bg-pink-100 hover:bg-pink-200 text-pink-700 px-3 py-1 rounded-md text-sm font-medium transition-colors">
-                                📝 Quiz
+                            <a href="ma/fikih/fikih-siyasah.html" class="ml-3 learn-btn text-white px-4 py-2 rounded-lg text-sm font-medium">
+                                📚 Pelajari
                             </a>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Pendidikan Jasmani -->
-            <div class="subject-card bg-white rounded-xl shadow-lg p-6 category-arts category-all">
-                <div class="flex items-center mb-4">
-                    <div class="w-12 h-12 bg-orange-500 rounded-lg flex items-center justify-center text-white text-2xl mr-4">
-                        ⚽
+            <!-- MA - Matematika Peminatan -->
+            <div class="subject-card rounded-2xl shadow-xl p-6 jenjang-MA kategori-ipa" data-jenjang="MA" data-kategori="ipa">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="flex items-center">
+                        <div class="w-14 h-14 bg-gradient-to-br from-red-500 to-pink-600 rounded-xl flex items-center justify-center text-white text-2xl mr-4">
+                            📊
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-800">Matematika Peminatan</h3>
+                            <div class="grade-badge text-white px-3 py-1 rounded-full text-sm font-medium mt-1">MA</div>
+                        </div>
                     </div>
-                    <h3 class="text-xl font-bold text-gray-800">Pendidikan Jasmani</h3>
                 </div>
-                <p class="text-gray-600 mb-4">Mengembangkan kebugaran dan keterampilan olahraga</p>
-                <div class="space-y-2">
+                <p class="text-gray-600 mb-4">Matematika lanjutan untuk peminatan IPA</p>
+                <div class="space-y-3">
                     <div class="chapter-item p-3 rounded-lg border border-gray-200">
                         <div class="flex justify-between items-center">
-                            <span class="cursor-pointer flex-1" onclick="openChapter('Pendidikan Jasmani', 'Atletik')">
-                                <span class="font-medium">Bab 1:</span> Atletik
+                            <span class="cursor-pointer flex-1" onclick="openChapter('Matematika Peminatan', 'Limit Fungsi')">
+                                <span class="font-medium">Bab 1:</span> Limit Fungsi
                             </span>
-                            <a href="quiz/pendidikan-jasmani/atletik.html" class="ml-3 bg-orange-100 hover:bg-orange-200 text-orange-700 px-3 py-1 rounded-md text-sm font-medium transition-colors">
-                                📝 Quiz
+                            <a href="ma/matematika-peminatan/limit-fungsi.html" class="ml-3 learn-btn text-white px-4 py-2 rounded-lg text-sm font-medium">
+                                📚 Pelajari
                             </a>
                         </div>
                     </div>
                     <div class="chapter-item p-3 rounded-lg border border-gray-200">
                         <div class="flex justify-between items-center">
-                            <span class="cursor-pointer flex-1" onclick="openChapter('Pendidikan Jasmani', 'Permainan Bola Besar')">
-                                <span class="font-medium">Bab 2:</span> Permainan Bola Besar
+                            <span class="cursor-pointer flex-1">
+                                <span class="font-medium">Bab 2:</span> Turunan
                             </span>
-                            <a href="quiz/pendidikan-jasmani/permainan-bola-besar.html" class="ml-3 bg-orange-100 hover:bg-orange-200 text-orange-700 px-3 py-1 rounded-md text-sm font-medium transition-colors">
-                                📝 Quiz
+                            <a href="ma/matematika-peminatan/turunan.html" class="ml-3 learn-btn text-white px-4 py-2 rounded-lg text-sm font-medium">
+                                📚 Pelajari
                             </a>
                         </div>
                     </div>
                     <div class="chapter-item p-3 rounded-lg border border-gray-200">
                         <div class="flex justify-between items-center">
-                            <span class="cursor-pointer flex-1" onclick="openChapter('Pendidikan Jasmani', 'Permainan Bola Kecil')">
-                                <span class="font-medium">Bab 3:</span> Permainan Bola Kecil
+                            <span class="cursor-pointer flex-1">
+                                <span class="font-medium">Bab 3:</span> Integral
                             </span>
-                            <a href="quiz/pendidikan-jasmani/permainan-bola-kecil.html" class="ml-3 bg-orange-100 hover:bg-orange-200 text-orange-700 px-3 py-1 rounded-md text-sm font-medium transition-colors">
-                                📝 Quiz
-                            </a>
-                        </div>
-                    </div>
-                    <div class="chapter-item p-3 rounded-lg border border-gray-200">
-                        <div class="flex justify-between items-center">
-                            <span class="cursor-pointer flex-1" onclick="openChapter('Pendidikan Jasmani', 'Senam & Kebugaran')">
-                                <span class="font-medium">Bab 4:</span> Senam & Kebugaran
-                            </span>
-                            <a href="quiz/pendidikan-jasmani/senam-kebugaran.html" class="ml-3 bg-orange-100 hover:bg-orange-200 text-orange-700 px-3 py-1 rounded-md text-sm font-medium transition-colors">
-                                📝 Quiz
+                            <a href="ma/matematika-peminatan/integral.html" class="ml-3 learn-btn text-white px-4 py-2 rounded-lg text-sm font-medium">
+                                📚 Pelajari
                             </a>
                         </div>
                     </div>
                 </div>
             </div>
+
+            <!-- MA - Ekonomi -->
+            <div class="subject-card rounded-2xl shadow-xl p-6 jenjang-MA kategori-ips" data-jenjang="MA" data-kategori="ips">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="flex items-center">
+                        <div class="w-14 h-14 bg-gradient-to-br from-yellow-500 to-orange-600 rounded-xl flex items-center justify-center text-white text-2xl mr-4">
+                            💰
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-800">Ekonomi</h3>
+                            <div class="grade-badge text-white px-3 py-1 rounded-full text-sm font-medium mt-1">MA</div>
+                        </div>
+                    </div>
+                </div>
+                <p class="text-gray-600 mb-4">Ilmu ekonomi dan sistem perekonomian</p>
+                <div class="space-y-3">
+                    <div class="chapter-item p-3 rounded-lg border border-gray-200">
+                        <div class="flex justify-between items-center">
+                            <span class="cursor-pointer flex-1" onclick="openChapter('Ekonomi', 'Konsep Dasar Ekonomi')">
+                                <span class="font-medium">Bab 1:</span> Konsep Dasar Ekonomi
+                            </span>
+                            <a href="ma/ekonomi/konsep-dasar-ekonomi.html" class="ml-3 learn-btn text-white px-4 py-2 rounded-lg text-sm font-medium">
+                                📚 Pelajari
+                            </a>
+                        </div>
+                    </div>
+                    <div class="chapter-item p-3 rounded-lg border border-gray-200">
+                        <div class="flex justify-between items-center">
+                            <span class="cursor-pointer flex-1" onclick="openChapter('Ekonomi', 'Sistem Ekonomi')">
+                                <span class="font-medium">Bab 2:</span> Sistem Ekonomi
+                            </span>
+                            <a href="ma/ekonomi/sistem-ekonomi.html" class="ml-3 learn-btn text-white px-4 py-2 rounded-lg text-sm font-medium">
+                                📚 Pelajari
+                            </a>
+                        </div>
+                    </div>
+                    <div class="chapter-item p-3 rounded-lg border border-gray-200">
+                        <div class="flex justify-between items-center">
+                            <span class="cursor-pointer flex-1" onclick="openChapter('Ekonomi', 'Pasar dan Harga')">
+                                <span class="font-medium">Bab 3:</span> Pasar dan Harga
+                            </span>
+                            <a href="ma/ekonomi/pasar-dan-harga.html" class="ml-3 learn-btn text-white px-4 py-2 rounded-lg text-sm font-medium">
+                                📚 Pelajari
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- No Results Message -->
+        <div id="noResults" class="text-center py-12 hidden">
+            <div class="text-6xl mb-4">🔍</div>
+            <h3 class="text-2xl font-bold text-gray-600 mb-2">Tidak ada hasil ditemukan</h3>
+            <p class="text-gray-500">Coba gunakan kata kunci yang berbeda atau pilih filter lain</p>
         </div>
     </main>
 
     <!-- Modal for Chapter Details -->
     <div id="chapterModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
-        <div class="bg-white rounded-xl p-8 max-w-2xl w-full mx-4 max-h-96 overflow-y-auto">
+        <div class="bg-white rounded-2xl p-8 max-w-3xl w-full mx-4 max-h-96 overflow-y-auto shadow-2xl">
             <div class="flex justify-between items-center mb-6">
-                <h2 id="modalTitle" class="text-2xl font-bold text-gray-800"></h2>
-                <button onclick="closeModal()" class="text-gray-500 hover:text-gray-700 text-2xl">×</button>
+                <h2 id="modalTitle" class="text-3xl font-bold text-gray-800"></h2>
+                <button onclick="closeModal()" class="text-gray-500 hover:text-gray-700 text-3xl">×</button>
             </div>
-            <div id="modalContent" class="text-gray-600">
+            <div id="modalContent" class="text-gray-600 text-lg leading-relaxed">
                 <!-- Content will be populated by JavaScript -->
             </div>
-            <div class="mt-6 flex justify-end">
-                <button onclick="closeModal()" class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded-lg transition-colors">
+            <div class="mt-8 flex justify-end space-x-4">
+                <button onclick="closeModal()" class="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white px-8 py-3 rounded-xl font-medium transition-all duration-200 shadow-lg">
                     Tutup
                 </button>
             </div>
         </div>
     </div>
 
-
-
     <script>
-        // Tab functionality
-        function showCategory(category) {
+        let currentFilter = 'all';
+
+        // Search functionality
+        function performSearch() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
             const cards = document.querySelectorAll('.subject-card');
-            const tabs = document.querySelectorAll('.tab-btn');
-            
-            // Remove active class from all tabs
-            tabs.forEach(tab => {
-                tab.classList.remove('active', 'bg-blue-500', 'text-white');
-                tab.classList.add('text-gray-600', 'hover:bg-gray-100');
-            });
-            
-            // Add active class to clicked tab
-            event.target.classList.add('active', 'bg-blue-500', 'text-white');
-            event.target.classList.remove('text-gray-600', 'hover:bg-gray-100');
-            
-            // Show/hide cards based on category
+            let visibleCount = 0;
+
             cards.forEach(card => {
-                if (category === 'all' || card.classList.contains(`category-${category}`)) {
+                const title = card.querySelector('h3').textContent.toLowerCase();
+                const chapters = Array.from(card.querySelectorAll('.chapter-item span')).map(span => span.textContent.toLowerCase());
+                const jenjang = card.dataset.jenjang.toLowerCase();
+                
+                const matchesSearch = searchTerm === '' || 
+                    title.includes(searchTerm) || 
+                    chapters.some(chapter => chapter.includes(searchTerm)) ||
+                    jenjang.includes(searchTerm);
+                
+                const matchesFilter = currentFilter === 'all' || card.classList.contains(`jenjang-${currentFilter}`);
+                
+                if (matchesSearch && matchesFilter) {
                     card.style.display = 'block';
+                    visibleCount++;
                 } else {
                     card.style.display = 'none';
                 }
             });
+
+            // Show/hide no results message
+            document.getElementById('noResults').classList.toggle('hidden', visibleCount > 0);
+        }
+
+        // Clear search
+        function clearSearch() {
+            document.getElementById('searchInput').value = '';
+            performSearch();
+        }
+
+        // Filter by jenjang
+        function filterByJenjang(jenjang) {
+            currentFilter = jenjang;
+            
+            // Update active filter button
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            performSearch();
         }
 
         // Chapter modal functionality
@@ -533,28 +657,31 @@
             
             title.textContent = `${subject} - ${chapter}`;
             
-            // Sample content for each chapter
+            // Enhanced content for each chapter
             const chapterContent = {
-                'Aljabar': 'Mempelajari operasi matematika dengan variabel dan konstanta. Topik meliputi persamaan linear, kuadrat, dan sistem persamaan.',
-                'Geometri': 'Memahami bentuk, ukuran, dan sifat ruang. Mencakup bangun datar, bangun ruang, dan teorema geometri.',
-                'Mekanika': 'Studi tentang gerak benda dan gaya yang mempengaruhinya. Meliputi kinematika dan dinamika.',
-                'Struktur Atom': 'Memahami komponen penyusun atom: proton, neutron, dan elektron serta konfigurasi elektronnya.',
-                'Teks Narasi': 'Mempelajari struktur dan ciri-ciri teks yang menceritakan suatu peristiwa secara kronologis.',
-                'Prasejarah Indonesia': 'Mengenal kehidupan manusia purba di Indonesia dan peninggalan-peninggalannya.',
-                'Litosfer': 'Mempelajari lapisan batuan bumi, proses pembentukan batuan, dan fenomena geologi.',
-                'Seni Rupa': 'Mengeksplorasi unsur-unsur seni rupa seperti garis, warna, bentuk, dan komposisi.',
-                'Atletik': 'Mempelajari cabang olahraga lari, lompat, dan lempar serta teknik-tekniknya.'
+                'Mengenal Huruf Hijaiyah': 'Mempelajari 28 huruf hijaiyah sebagai dasar membaca Al-Quran. Siswa akan belajar bentuk, bunyi, dan cara penulisan setiap huruf.',
+                'Surat-surat Pendek': 'Menghafal dan memahami makna surat-surat pendek dalam Al-Quran seperti Al-Fatihah, Al-Ikhlas, Al-Falaq, dan An-Nas.',
+                'Rukun Iman': 'Memahami enam rukun iman: iman kepada Allah, malaikat, kitab, rasul, hari akhir, dan qada qadar.',
+                'Thaharah (Bersuci)': 'Mempelajari tata cara bersuci dari hadats kecil dan besar, serta jenis-jenis najis dan cara membersihkannya.',
+                'Shalat': 'Memahami tata cara shalat lima waktu, syarat, rukun, dan sunnah-sunnah dalam shalat.',
+                'Bilangan dan Operasi Hitung': 'Mengenal bilangan cacah, operasi penjumlahan, pengurangan, perkalian, dan pembagian.',
+                'Tajwid dan Qiraah': 'Mempelajari kaidah tajwid untuk membaca Al-Quran dengan benar dan indah.',
+                'Makhluk Hidup dan Lingkungan': 'Memahami ciri-ciri makhluk hidup, klasifikasi, dan interaksi dengan lingkungan.',
+                'Fikih Muamalah': 'Mempelajari hukum-hukum Islam dalam bidang ekonomi dan transaksi.',
+                'Fikih Jinayat': 'Memahami hukum pidana Islam dan sanksi-sanksi dalam syariat.',
+                'Limit Fungsi': 'Konsep limit dalam matematika dan aplikasinya dalam menyelesaikan masalah.',
+                'Konsep Dasar Ekonomi': 'Memahami kebutuhan, kelangkaan, dan masalah pokok ekonomi.'
             };
             
             content.innerHTML = `
-                <p class="mb-4">${chapterContent[chapter] || 'Konten pembelajaran untuk bab ini sedang dalam pengembangan.'}</p>
-                <div class="bg-blue-50 p-4 rounded-lg">
-                    <h4 class="font-semibold text-blue-800 mb-2">Materi yang akan dipelajari:</h4>
-                    <ul class="list-disc list-inside text-blue-700 space-y-1">
-                        <li>Konsep dasar dan definisi</li>
-                        <li>Contoh dan aplikasi</li>
-                        <li>Latihan soal</li>
-                        <li>Evaluasi pemahaman</li>
+                <p class="mb-6">${chapterContent[chapter] || 'Konten pembelajaran untuk bab ini sedang dalam pengembangan.'}</p>
+                <div class="bg-gradient-to-r from-blue-50 to-purple-50 p-6 rounded-xl border border-blue-200">
+                    <h4 class="font-bold text-blue-800 mb-4 text-xl">📚 Materi Pembelajaran:</h4>
+                    <ul class="list-disc list-inside text-blue-700 space-y-2 text-lg">
+                        <li>Konsep dasar dan teori fundamental</li>
+                        <li>Contoh kasus dan aplikasi praktis</li>
+                        <li>Latihan soal dan pembahasan</li>
+                        <li>Evaluasi dan penilaian kompetensi</li>
                     </ul>
                 </div>
             `;
@@ -569,9 +696,9 @@
             modal.classList.remove('flex');
         }
 
-        // Initialize with all subjects shown
+        // Initialize
         document.addEventListener('DOMContentLoaded', function() {
-            showCategory('all');
+            performSearch();
         });
 
         // Close modal when clicking outside
@@ -581,7 +708,12 @@
             }
         });
 
-
+        // Add search on Enter key
+        document.getElementById('searchInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                performSearch();
+            }
+        });
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'97296090615e4100',t:'MTc1NTc3MTQxMC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'972aebbca79158f8',t:'MTc1NTc4NzU5Ni4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
