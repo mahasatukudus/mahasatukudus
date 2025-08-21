@@ -68,6 +68,19 @@
             color: white;
             border-color: #16a34a;
         }
+        .page-btn {
+            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+            border: 2px solid #bbf7d0;
+            transition: all 0.2s ease;
+        }
+        .page-btn:hover {
+            background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%);
+        }
+        .page-btn.active {
+            background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+            color: white;
+            border-color: #16a34a;
+        }
         .subject-selector {
             background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
             border: 2px solid #bbf7d0;
@@ -212,6 +225,16 @@
                     <p class="text-green-100">Madrasah Aliyah</p>
                     <p class="text-sm text-green-200 mt-2">Kelas 10-12 • Usia 15-18 tahun</p>
                 </div>
+            </div>
+        </div>
+
+        <!-- Pagination Info -->
+        <div class="flex justify-between items-center mb-6">
+            <div class="text-gray-600">
+                <span id="showing-info">Menampilkan 1-3 dari <span id="total-subjects">0</span> mata pelajaran</span>
+            </div>
+            <div class="text-sm text-gray-500">
+                <span id="page-info">Halaman <span id="current-page">1</span> dari <span id="total-pages">1</span></span>
             </div>
         </div>
 
@@ -1188,6 +1211,21 @@
 
         </div>
 
+        <!-- Pagination Controls -->
+        <div id="pagination-controls" class="flex justify-center items-center space-x-2 mt-12">
+            <button onclick="goToPage(currentPageNum - 1)" id="prev-btn" class="px-4 py-2 bg-gray-200 text-gray-600 rounded-lg hover:bg-gray-300 transition-all disabled:opacity-50 disabled:cursor-not-allowed">
+                ← Sebelumnya
+            </button>
+            
+            <div id="page-numbers" class="flex space-x-1">
+                <!-- Page numbers will be generated here -->
+            </div>
+            
+            <button onclick="goToPage(currentPageNum + 1)" id="next-btn" class="px-4 py-2 bg-gray-200 text-gray-600 rounded-lg hover:bg-gray-300 transition-all disabled:opacity-50 disabled:cursor-not-allowed">
+                Selanjutnya →
+            </button>
+        </div>
+
         <!-- No Results Message -->
         <div id="noResults" class="text-center py-12 hidden">
             <div class="text-6xl mb-4">🔍</div>
@@ -1200,12 +1238,15 @@
         let currentFilter = 'all';
         let currentClassFilter = 'all';
         let currentSubjectFilter = 'all';
+        let currentPageNum = 1;
+        const itemsPerPage = 3;
+        let filteredCards = [];
 
-        // Search functionality
+        // Search and filter functionality
         function performSearch() {
             const searchTerm = document.getElementById('searchInput').value.toLowerCase();
             const cards = document.querySelectorAll('.subject-card');
-            let visibleCount = 0;
+            filteredCards = [];
 
             cards.forEach(card => {
                 const title = card.querySelector('h3').textContent.toLowerCase();
@@ -1223,15 +1264,91 @@
                 const matchesSubjectFilter = currentSubjectFilter === 'all' || card.classList.contains(`kategori-${currentSubjectFilter}`);
                 
                 if (matchesSearch && matchesJenjangFilter && matchesClassFilter && matchesSubjectFilter) {
-                    card.style.display = 'block';
-                    visibleCount++;
-                } else {
-                    card.style.display = 'none';
+                    filteredCards.push(card);
                 }
             });
 
+            // Reset to page 1 when filters change
+            currentPageNum = 1;
+            displayPage();
+        }
+
+        // Display current page
+        function displayPage() {
+            const cards = document.querySelectorAll('.subject-card');
+            const totalItems = filteredCards.length;
+            const totalPages = Math.ceil(totalItems / itemsPerPage);
+            
+            // Hide all cards first
+            cards.forEach(card => {
+                card.style.display = 'none';
+            });
+
+            // Show cards for current page
+            const startIndex = (currentPageNum - 1) * itemsPerPage;
+            const endIndex = startIndex + itemsPerPage;
+            const pageCards = filteredCards.slice(startIndex, endIndex);
+            
+            pageCards.forEach(card => {
+                card.style.display = 'block';
+            });
+
+            // Update pagination info
+            updatePaginationInfo(totalItems, totalPages);
+            
             // Show/hide no results message
-            document.getElementById('noResults').classList.toggle('hidden', visibleCount > 0);
+            document.getElementById('noResults').classList.toggle('hidden', totalItems > 0);
+            
+            // Show/hide pagination controls
+            document.getElementById('pagination-controls').classList.toggle('hidden', totalItems <= itemsPerPage);
+        }
+
+        // Update pagination information
+        function updatePaginationInfo(totalItems, totalPages) {
+            const startItem = totalItems === 0 ? 0 : (currentPageNum - 1) * itemsPerPage + 1;
+            const endItem = Math.min(currentPageNum * itemsPerPage, totalItems);
+            
+            document.getElementById('total-subjects').textContent = totalItems;
+            document.getElementById('showing-info').innerHTML = `Menampilkan ${startItem}-${endItem} dari <span id="total-subjects">${totalItems}</span> mata pelajaran`;
+            document.getElementById('current-page').textContent = currentPageNum;
+            document.getElementById('total-pages').textContent = totalPages;
+            
+            // Update navigation buttons
+            document.getElementById('prev-btn').disabled = currentPageNum <= 1;
+            document.getElementById('next-btn').disabled = currentPageNum >= totalPages;
+            
+            // Generate page numbers
+            generatePageNumbers(totalPages);
+        }
+
+        // Generate page number buttons
+        function generatePageNumbers(totalPages) {
+            const pageNumbersContainer = document.getElementById('page-numbers');
+            pageNumbersContainer.innerHTML = '';
+            
+            for (let i = 1; i <= totalPages; i++) {
+                const pageBtn = document.createElement('button');
+                pageBtn.textContent = i;
+                pageBtn.className = `page-btn px-3 py-2 rounded-lg font-medium text-sm ${i === currentPageNum ? 'active' : ''}`;
+                pageBtn.onclick = () => goToPage(i);
+                pageNumbersContainer.appendChild(pageBtn);
+            }
+        }
+
+        // Go to specific page
+        function goToPage(pageNum) {
+            const totalPages = Math.ceil(filteredCards.length / itemsPerPage);
+            
+            if (pageNum >= 1 && pageNum <= totalPages) {
+                currentPageNum = pageNum;
+                displayPage();
+                
+                // Scroll to top of subjects section
+                document.getElementById('subjects-container').scrollIntoView({ 
+                    behavior: 'smooth', 
+                    block: 'start' 
+                });
+            }
         }
 
         // Clear search
@@ -1291,5 +1408,5 @@
             }
         });
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'972b54fc37769de3',t:'MTc1NTc5MTkwNy4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'972dc383f1c01982',t:'MTc1NTgxNzQwNi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
