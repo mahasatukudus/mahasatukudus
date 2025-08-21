@@ -1,1 +1,527 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Fikih Jinayat - Portal Pembelajaran</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .quiz-section {
+            display: none;
+        }
+        .quiz-section.active {
+            display: block;
+        }
+        .question-item {
+            transition: all 0.3s ease;
+        }
+        .question-item:hover {
+            background-color: #f8fafc;
+        }
+        .loading {
+            display: none;
+        }
+        .loading.show {
+            display: flex;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
+    <!-- Header -->
+    <header class="bg-white shadow-lg">
+        <div class="max-w-4xl mx-auto px-4 py-6">
+            <h1 class="text-3xl font-bold text-gray-800 text-center">
+                📚 Quiz Fikih Jinayat
+            </h1>
+            <p class="text-gray-600 text-center mt-2">Pendidikan Agama Islam - Bab Fikih Jinayat</p>
+        </div>
+    </header>
+
+    <!-- Login Form -->
+    <div id="loginSection" class="max-w-md mx-auto mt-8 bg-white rounded-xl shadow-lg p-8">
+        <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">Login Quiz</h2>
+        <form id="loginForm" class="space-y-4">
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Nama Lengkap</label>
+                <input type="text" id="studentName" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Mata Pelajaran</label>
+                <select id="subject" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    <option value="">Pilih Mata Pelajaran</option>
+                    <option value="Pendidikan Agama Islam">Pendidikan Agama Islam</option>
+                </select>
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Bab</label>
+                <select id="chapter" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    <option value="">Pilih Bab</option>
+                    <option value="Fikih Jinayat">Fikih Jinayat</option>
+                </select>
+            </div>
+            <button type="submit" class="w-full bg-blue-500 hover:bg-blue-600 text-white font-medium py-3 px-4 rounded-lg transition-colors">
+                Mulai Quiz
+            </button>
+        </form>
+    </div>
+
+    <!-- Quiz Navigation -->
+    <div id="quizNavigation" class="max-w-4xl mx-auto mt-8 bg-white rounded-xl shadow-lg p-6" style="display: none;">
+        <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">Pilih Jenis Quiz</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4">
+            <button onclick="showQuizSection('pilihan-ganda')" class="bg-blue-500 hover:bg-blue-600 text-white font-medium py-3 px-4 rounded-lg transition-colors">
+                Pilihan Ganda
+            </button>
+            <button onclick="showQuizSection('isian')" class="bg-green-500 hover:bg-green-600 text-white font-medium py-3 px-4 rounded-lg transition-colors">
+                Isian
+            </button>
+            <button onclick="showQuizSection('essay')" class="bg-purple-500 hover:bg-purple-600 text-white font-medium py-3 px-4 rounded-lg transition-colors">
+                Essay
+            </button>
+            <button onclick="showQuizSection('remedial')" class="bg-orange-500 hover:bg-orange-600 text-white font-medium py-3 px-4 rounded-lg transition-colors">
+                Remedial
+            </button>
+            <button onclick="showQuizSection('pengayaan')" class="bg-red-500 hover:bg-red-600 text-white font-medium py-3 px-4 rounded-lg transition-colors">
+                Pengayaan
+            </button>
+        </div>
+    </div>
+
+    <!-- Quiz Sections -->
+    <div id="quizContainer" class="max-w-4xl mx-auto mt-8" style="display: none;">
+        
+        <!-- Pilihan Ganda -->
+        <div id="pilihan-ganda" class="quiz-section bg-white rounded-xl shadow-lg p-8">
+            <h3 class="text-2xl font-bold text-gray-800 mb-6">A. Pilihan Ganda</h3>
+            <p class="text-gray-600 mb-6">Berilah tanda silang (x) huruf a, b, c, d, atau e pada jawaban yang benar!</p>
+            
+            <form id="pilihanGandaForm" class="space-y-6">
+                <div class="question-item p-4 border border-gray-200 rounded-lg">
+                    <p class="font-medium mb-3">1. Berikut ini bukan merupakan jenis hukuman dalam fikih jinayat yaitu ....</p>
+                    <div class="space-y-2">
+                        <label class="flex items-center"><input type="radio" name="q1" value="a" class="mr-2"> a. hudud</label>
+                        <label class="flex items-center"><input type="radio" name="q1" value="b" class="mr-2"> b. qishash diyat</label>
+                        <label class="flex items-center"><input type="radio" name="q1" value="c" class="mr-2"> c. ta'zir</label>
+                        <label class="flex items-center"><input type="radio" name="q1" value="d" class="mr-2"> d. syariah umum</label>
+                        <label class="flex items-center"><input type="radio" name="q1" value="e" class="mr-2"> e. zakat</label>
+                    </div>
+                </div>
+
+                <div class="question-item p-4 border border-gray-200 rounded-lg">
+                    <p class="font-medium mb-3">2. Hudud dalam fikih jinayat merupakan hak dari....</p>
+                    <div class="space-y-2">
+                        <label class="flex items-center"><input type="radio" name="q2" value="a" class="mr-2"> a. Allah Swt.</label>
+                        <label class="flex items-center"><input type="radio" name="q2" value="b" class="mr-2"> b. korban</label>
+                        <label class="flex items-center"><input type="radio" name="q2" value="c" class="mr-2"> c. ahli waris</label>
+                        <label class="flex items-center"><input type="radio" name="q2" value="d" class="mr-2"> d. hakim</label>
+                        <label class="flex items-center"><input type="radio" name="q2" value="e" class="mr-2"> e. masyarakat</label>
+                    </div>
+                </div>
+
+                <div class="question-item p-4 border border-gray-200 rounded-lg">
+                    <p class="font-medium mb-3">3. Pelaksanaan qishash dan diyat dijalankan atas hak.....</p>
+                    <div class="space-y-2">
+                        <label class="flex items-center"><input type="radio" name="q3" value="a" class="mr-2"> a. Allah swt.</label>
+                        <label class="flex items-center"><input type="radio" name="q3" value="b" class="mr-2"> b. korban atau keluarga korban</label>
+                        <label class="flex items-center"><input type="radio" name="q3" value="c" class="mr-2"> c. Pengadilan Agama</label>
+                        <label class="flex items-center"><input type="radio" name="q3" value="d" class="mr-2"> d. ulama</label>
+                        <label class="flex items-center"><input type="radio" name="q3" value="e" class="mr-2"> e. polisi</label>
+                    </div>
+                </div>
+
+                <div class="question-item p-4 border border-gray-200 rounded-lg">
+                    <p class="font-medium mb-3">4. Hukuman ta'zir dalam fikih jinayat bertujuan untuk</p>
+                    <div class="space-y-2">
+                        <label class="flex items-center"><input type="radio" name="q4" value="a" class="mr-2"> a. menegakkan hak Allah</label>
+                        <label class="flex items-center"><input type="radio" name="q4" value="b" class="mr-2"> b. balas setimpal korban</label>
+                        <label class="flex items-center"><input type="radio" name="q4" value="c" class="mr-2"> c. memberi efek jera dan pelajaran</label>
+                        <label class="flex items-center"><input type="radio" name="q4" value="d" class="mr-2"> d. mengganti kerugian</label>
+                        <label class="flex items-center"><input type="radio" name="q4" value="e" class="mr-2"> e. menegakkan politik syariah</label>
+                    </div>
+                </div>
+
+                <div class="question-item p-4 border border-gray-200 rounded-lg">
+                    <p class="font-medium mb-3">5. Jenis jinayat yang sanksinya sudah ditentukan dalam nash al-Qur'an dan Hadis disebut....</p>
+                    <div class="space-y-2">
+                        <label class="flex items-center"><input type="radio" name="q5" value="a" class="mr-2"> a. hudud</label>
+                        <label class="flex items-center"><input type="radio" name="q5" value="b" class="mr-2"> b. qishash diyat</label>
+                        <label class="flex items-center"><input type="radio" name="q5" value="c" class="mr-2"> c. ta'zir</label>
+                        <label class="flex items-center"><input type="radio" name="q5" value="d" class="mr-2"> d. diyat</label>
+                        <label class="flex items-center"><input type="radio" name="q5" value="e" class="mr-2"> e. ahwalus sakhsiyah</label>
+                    </div>
+                </div>
+
+                <button type="submit" class="w-full bg-blue-500 hover:bg-blue-600 text-white font-medium py-3 px-4 rounded-lg transition-colors">
+                    Submit Jawaban Pilihan Ganda
+                </button>
+            </form>
+        </div>
+
+        <!-- Isian -->
+        <div id="isian" class="quiz-section bg-white rounded-xl shadow-lg p-8">
+            <h3 class="text-2xl font-bold text-gray-800 mb-6">B. Isian</h3>
+            <p class="text-gray-600 mb-6">Isilah titik-titik di bawah ini dengan jawaban yang benar!</p>
+            
+            <form id="isianForm" class="space-y-6">
+                <div class="question-item p-4 border border-gray-200 rounded-lg">
+                    <p class="font-medium mb-3">1. Kata Qati al-Amd artinya adalah....</p>
+                    <input type="text" name="isian1" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                </div>
+
+                <div class="question-item p-4 border border-gray-200 rounded-lg">
+                    <p class="font-medium mb-3">2. Memberi makan 10 orang miskin atau berpuasa dua bulan berturut-turut merupakan kafarat bagi ....</p>
+                    <input type="text" name="isian2" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                </div>
+
+                <div class="question-item p-4 border border-gray-200 rounded-lg">
+                    <p class="font-medium mb-3">3. Pembunuhan yang dilakukan oleh sekelompok orang dengan terencana disebut dengan ...</p>
+                    <input type="text" name="isian3" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                </div>
+
+                <div class="question-item p-4 border border-gray-200 rounded-lg">
+                    <p class="font-medium mb-3">4. Pelaku pembunuhan di tanah Haram dikenakan diyat....</p>
+                    <input type="text" name="isian4" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                </div>
+
+                <div class="question-item p-4 border border-gray-200 rounded-lg">
+                    <p class="font-medium mb-3">5. Menghindarkan kemarahan dan kebencian yang akan dialami oleh pihak keluarga korban merupakan hikmah dari...</p>
+                    <input type="text" name="isian5" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                </div>
+
+                <div class="question-item p-4 border border-gray-200 rounded-lg">
+                    <p class="font-medium mb-3">6. Terjaminnya kelangsungan hidup dan terjaga keselamatan jiwa merupakan hikmah dilarangnya .....</p>
+                    <input type="text" name="isian6" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                </div>
+
+                <div class="question-item p-4 border border-gray-200 rounded-lg">
+                    <p class="font-medium mb-3">7. Hukuman dalam fikih jinayat di bagi menjadi ...</p>
+                    <input type="text" name="isian7" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                </div>
+
+                <div class="question-item p-4 border border-gray-200 rounded-lg">
+                    <p class="font-medium mb-3">8. Membunuh hewan milik orang lain dengan sengaja dikenakan hukuman...</p>
+                    <input type="text" name="isian8" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                </div>
+
+                <div class="question-item p-4 border border-gray-200 rounded-lg">
+                    <p class="font-medium mb-3">9. Berdasarkan dari QS. al-Baqarah [2]:178) hukum melaksanakan hukum qishas kepada palaku kejahatan pembunuhan dan penganiayaan berat adalah...</p>
+                    <input type="text" name="isian9" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                </div>
+
+                <div class="question-item p-4 border border-gray-200 rounded-lg">
+                    <p class="font-medium mb-3">10. Memerdekakan hamba sahaya muslim atau berpuasa selama dua bulan berturut-turut adalah bentuk pembayaran....</p>
+                    <input type="text" name="isian10" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                </div>
+
+                <button type="submit" class="w-full bg-green-500 hover:bg-green-600 text-white font-medium py-3 px-4 rounded-lg transition-colors">
+                    Submit Jawaban Isian
+                </button>
+            </form>
+        </div>
+
+        <!-- Essay -->
+        <div id="essay" class="quiz-section bg-white rounded-xl shadow-lg p-8">
+            <h3 class="text-2xl font-bold text-gray-800 mb-6">C. Essay</h3>
+            <p class="text-gray-600 mb-6">Jawablah pertanyaan-pertanyaan berikut dengan benar!</p>
+            
+            <form id="essayForm" class="space-y-6">
+                <div class="question-item p-4 border border-gray-200 rounded-lg">
+                    <p class="font-medium mb-3">1. Sebut jenis kejahatan yang termasuk dalam jarimah qishash diyat !</p>
+                    <textarea name="essay1" rows="4" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"></textarea>
+                </div>
+
+                <div class="question-item p-4 border border-gray-200 rounded-lg">
+                    <p class="font-medium mb-3">2. Bagaimanakah hukuman qishash kepada kasus pembunuhan orang yang kafir?</p>
+                    <textarea name="essay2" rows="4" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"></textarea>
+                </div>
+
+                <div class="question-item p-4 border border-gray-200 rounded-lg">
+                    <p class="font-medium mb-3">3. Apa yang dimaksud dengan pembunuhan oleh massa?</p>
+                    <textarea name="essay3" rows="4" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"></textarea>
+                </div>
+
+                <div class="question-item p-4 border border-gray-200 rounded-lg">
+                    <p class="font-medium mb-3">4. Apa pendapat Ibnu Abbas tentang pembunuhan oleh massa?</p>
+                    <textarea name="essay4" rows="4" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"></textarea>
+                </div>
+
+                <div class="question-item p-4 border border-gray-200 rounded-lg">
+                    <p class="font-medium mb-3">5. Sebutkan syarat-syarat suatu pembunuhan dinamakan dengan pembunuhan sengaja!</p>
+                    <textarea name="essay5" rows="4" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"></textarea>
+                </div>
+
+                <div class="question-item p-4 border border-gray-200 rounded-lg">
+                    <p class="font-medium mb-3">6. Apakah yang dimaksud dengan jinayat ta'zir?</p>
+                    <textarea name="essay6" rows="4" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"></textarea>
+                </div>
+
+                <div class="question-item p-4 border border-gray-200 rounded-lg">
+                    <p class="font-medium mb-3">7. Sebutkan dalil dari ayat al-Qur'an tentang pembunuhan sengaja!</p>
+                    <textarea name="essay7" rows="4" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"></textarea>
+                </div>
+
+                <div class="question-item p-4 border border-gray-200 rounded-lg">
+                    <p class="font-medium mb-3">8. Sebutkan tindak pelanggaran yang termasuk dalam kategori jarimah hudud!</p>
+                    <textarea name="essay8" rows="4" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"></textarea>
+                </div>
+
+                <div class="question-item p-4 border border-gray-200 rounded-lg">
+                    <p class="font-medium mb-3">9. Sebutkan pembagian qishash!</p>
+                    <textarea name="essay9" rows="4" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"></textarea>
+                </div>
+
+                <div class="question-item p-4 border border-gray-200 rounded-lg">
+                    <p class="font-medium mb-3">10. Sebutkan macam-macam penganiyaan dan jelaskan!</p>
+                    <textarea name="essay10" rows="4" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"></textarea>
+                </div>
+
+                <button type="submit" class="w-full bg-purple-500 hover:bg-purple-600 text-white font-medium py-3 px-4 rounded-lg transition-colors">
+                    Submit Jawaban Essay
+                </button>
+            </form>
+        </div>
+
+        <!-- Remedial -->
+        <div id="remedial" class="quiz-section bg-white rounded-xl shadow-lg p-8">
+            <h3 class="text-2xl font-bold text-gray-800 mb-6">Remedial</h3>
+            <p class="text-gray-600 mb-6">Isilah titik-titik di bawah ini dengan benar!</p>
+            
+            <form id="remedialForm" class="space-y-6">
+                <div class="question-item p-4 border border-gray-200 rounded-lg">
+                    <p class="font-medium mb-3">1. Jenis diyat berdasarkan berat dan ringannya dibagi menjadi....</p>
+                    <input type="text" name="remedial1" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                </div>
+
+                <div class="question-item p-4 border border-gray-200 rounded-lg">
+                    <p class="font-medium mb-3">2. Pelaku pembunuhan semi sengaja dihukum dengan hukuman...</p>
+                    <input type="text" name="remedial2" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                </div>
+
+                <div class="question-item p-4 border border-gray-200 rounded-lg">
+                    <p class="font-medium mb-3">3. Fikih jinayat jika di Indonesia mirip dengan hukum...</p>
+                    <input type="text" name="remedial3" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                </div>
+
+                <div class="question-item p-4 border border-gray-200 rounded-lg">
+                    <p class="font-medium mb-3">4. Yang menetapkan hukuman qishas, diyat, maupun kafarat adalah ....</p>
+                    <input type="text" name="remedial4" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                </div>
+
+                <div class="question-item p-4 border border-gray-200 rounded-lg">
+                    <p class="font-medium mb-3">5. Pelaku pemotongan kepala diqishas dengan ....</p>
+                    <input type="text" name="remedial5" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                </div>
+
+                <button type="submit" class="w-full bg-orange-500 hover:bg-orange-600 text-white font-medium py-3 px-4 rounded-lg transition-colors">
+                    Submit Jawaban Remedial
+                </button>
+            </form>
+        </div>
+
+        <!-- Pengayaan -->
+        <div id="pengayaan" class="quiz-section bg-white rounded-xl shadow-lg p-8">
+            <h3 class="text-2xl font-bold text-gray-800 mb-6">Pengayaan</h3>
+            <p class="text-gray-600 mb-6">Jawablah pertanyaan-pertanyaan berikut dengan benar!</p>
+            
+            <form id="pengayaanForm" class="space-y-6">
+                <div class="question-item p-4 border border-gray-200 rounded-lg">
+                    <p class="font-medium mb-3">1. Tuliskan hikmah yang ada dalam qishash (cukup tiga saja)!</p>
+                    <textarea name="pengayaan1" rows="4" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"></textarea>
+                </div>
+
+                <div class="question-item p-4 border border-gray-200 rounded-lg">
+                    <p class="font-medium mb-3">2. Jika dilihat dari jenisnya, maka unta yang harus dibayarkan untuk diyat sangat sulit didapatkan yang benar-benar sesuai dengan kriteria. Bolehkah semua itu diwujudkan dalam bentuk uang?</p>
+                    <textarea name="pengayaan2" rows="4" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"></textarea>
+                </div>
+
+                <div class="question-item p-4 border border-gray-200 rounded-lg">
+                    <p class="font-medium mb-3">3. Apakah ada aturan baku tentang cara pelaksanaan hukuman qishash bagi pembunuh? Apakah dengan cara dipancung, digantung atau lainnya?</p>
+                    <textarea name="pengayaan3" rows="4" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"></textarea>
+                </div>
+
+                <div class="question-item p-4 border border-gray-200 rounded-lg">
+                    <p class="font-medium mb-3">4. Mengapa harus ada saksi dalam masalah pembunuhan yang diancam dengan qishash?</p>
+                    <textarea name="pengayaan4" rows="4" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"></textarea>
+                </div>
+
+                <div class="question-item p-4 border border-gray-200 rounded-lg">
+                    <p class="font-medium mb-3">5. Bagaimana pendapatmu mengenai kemungkinan penerapan syariah Islam di Indonesia? Seberapa pentingkah hal itu?</p>
+                    <textarea name="pengayaan5" rows="4" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"></textarea>
+                </div>
+
+                <button type="submit" class="w-full bg-red-500 hover:bg-red-600 text-white font-medium py-3 px-4 rounded-lg transition-colors">
+                    Submit Jawaban Pengayaan
+                </button>
+            </form>
+        </div>
+
+        <!-- Back Button -->
+        <div class="mt-6 text-center">
+            <button onclick="backToNavigation()" class="bg-gray-500 hover:bg-gray-600 text-white font-medium py-2 px-6 rounded-lg transition-colors">
+                ← Kembali ke Menu Quiz
+            </button>
+        </div>
+    </div>
+
+    <!-- Loading Indicator -->
+    <div id="loadingIndicator" class="loading fixed inset-0 bg-black bg-opacity-50 items-center justify-center z-50">
+        <div class="bg-white rounded-lg p-8 text-center">
+            <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto mb-4"></div>
+            <p class="text-gray-600">Menyimpan jawaban...</p>
+        </div>
+    </div>
+
+    <!-- Success Message -->
+    <div id="successMessage" class="fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg transform translate-x-full transition-transform duration-300 z-50">
+        <p class="font-medium">✅ Jawaban berhasil disimpan!</p>
+    </div>
+
+    <script>
+        let studentData = {};
+        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz8BJ6teV3MfoEwdksorOvwlFldbig0Oa1X0gRgidKdg-h9TLNxUytGxtR7vWL5ZrIk/exec';
+
+        // Login Form Handler
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            studentData = {
+                name: document.getElementById('studentName').value,
+                subject: document.getElementById('subject').value,
+                chapter: document.getElementById('chapter').value
+            };
+
+            document.getElementById('loginSection').style.display = 'none';
+            document.getElementById('quizNavigation').style.display = 'block';
+        });
+
+        // Show Quiz Section
+        function showQuizSection(sectionId) {
+            document.getElementById('quizNavigation').style.display = 'none';
+            document.getElementById('quizContainer').style.display = 'block';
+            
+            // Hide all quiz sections
+            document.querySelectorAll('.quiz-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Show selected section
+            document.getElementById(sectionId).classList.add('active');
+        }
+
+        // Back to Navigation
+        function backToNavigation() {
+            document.getElementById('quizContainer').style.display = 'none';
+            document.getElementById('quizNavigation').style.display = 'block';
+        }
+
+        // Submit Functions
+        async function submitQuizData(quizType, answers) {
+            const loadingIndicator = document.getElementById('loadingIndicator');
+            const successMessage = document.getElementById('successMessage');
+            
+            try {
+                loadingIndicator.classList.add('show');
+                
+                const submitData = {
+                    timestamp: new Date().toISOString(),
+                    name: studentData.name,
+                    subject: studentData.subject,
+                    chapter: studentData.chapter,
+                    quizType: quizType,
+                    answers: answers
+                };
+
+                const response = await fetch(GOOGLE_SCRIPT_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(submitData)
+                });
+
+                // Show success message
+                successMessage.classList.remove('translate-x-full');
+                setTimeout(() => {
+                    successMessage.classList.add('translate-x-full');
+                }, 3000);
+
+                // Reset form
+                document.querySelector(`#${quizType}Form`).reset();
+                
+            } catch (error) {
+                console.error('Error submitting quiz:', error);
+                alert('Terjadi kesalahan saat menyimpan jawaban. Silakan coba lagi.');
+            } finally {
+                loadingIndicator.classList.remove('show');
+            }
+        }
+
+        // Pilihan Ganda Form Handler
+        document.getElementById('pilihanGandaForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+            const answers = {};
+            
+            for (let [key, value] of formData.entries()) {
+                answers[key] = value;
+            }
+            
+            submitQuizData('pilihan-ganda', answers);
+        });
+
+        // Isian Form Handler
+        document.getElementById('isianForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+            const answers = {};
+            
+            for (let [key, value] of formData.entries()) {
+                answers[key] = value;
+            }
+            
+            submitQuizData('isian', answers);
+        });
+
+        // Essay Form Handler
+        document.getElementById('essayForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+            const answers = {};
+            
+            for (let [key, value] of formData.entries()) {
+                answers[key] = value;
+            }
+            
+            submitQuizData('essay', answers);
+        });
+
+        // Remedial Form Handler
+        document.getElementById('remedialForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+            const answers = {};
+            
+            for (let [key, value] of formData.entries()) {
+                answers[key] = value;
+            }
+            
+            submitQuizData('remedial', answers);
+        });
+
+        // Pengayaan Form Handler
+        document.getElementById('pengayaanForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+            const answers = {};
+            
+            for (let [key, value] of formData.entries()) {
+                answers[key] = value;
+            }
+            
+            submitQuizData('pengayaan', answers);
+        });
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'97297c5502b75f3a',t:'MTc1NTc3MjU0Ny4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
 
